@@ -99,6 +99,9 @@ module.exports = {
         'no-case-declarations': [
           'off',
         ],
+        'no-plusplus': [
+          'off',
+        ],
       },
     },
   ],
