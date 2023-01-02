@@ -13,6 +13,8 @@ const Root = styled.button`
   border-bottom: 1px solid black;
   border-right: 1px solid black;
 
+  font-size: 5vmin;
+
   text-align: center;
 
   cursor: pointer;
@@ -30,7 +32,7 @@ const BoardButton: FC<Props> = ({ row, col }) => {
   return (
     <Root>
       {/* Draft layout */}
-      {row}{col}
+      ⚪
     </Root>
   );
 };
