@@ -16,7 +16,7 @@ const Root = styled.div`
 
 const Game: FC<{}> = () => (
   <Root>
-    <Title>Vite Reversi</Title>
+    <Title />
     <Board />
     <UIButtonWrapper />
   </Root>
