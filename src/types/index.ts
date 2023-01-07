@@ -9,16 +9,23 @@ export interface PieceCount {
   [Who.PLAYER_2]: number;
 }
 
+export type BoardStatus = Who[][];
+export interface BoardCoordinate {
+  row: number; col: number;
+}
+export type History = BoardCoordinate[];
+
 export interface GameStatus {
-  boardStatus: Who[][];
+  boardStatus: BoardStatus;
+  currentTurn: Who;
   isAvailable: boolean[][];
   pieceCount: PieceCount;
   winner: Who;
-  history: { row: number; col: number; }[];
+  history: History;
 }
 
 export interface AppStatus {
   gameStatus: GameStatus;
-  putPiece: ({ who, row, col }: { who: Who; row: number; col: number; }) => void;
+  putPiece: ({ row, col }: { row: number; col: number; }) => void;
   reset: () => void;
 }
