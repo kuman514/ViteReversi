@@ -14,4 +14,11 @@ export interface GameStatus {
   isAvailable: boolean[][];
   pieceCount: PieceCount;
   winner: Who;
+  history: { row: number; col: number; }[];
+}
+
+export interface AppStatus {
+  gameStatus: GameStatus;
+  putPiece: ({ who, row, col }: { who: Who; row: number; col: number; }) => void;
+  reset: () => void;
 }
