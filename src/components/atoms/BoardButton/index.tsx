@@ -1,6 +1,8 @@
-import React, { FC } from 'react';
+import React, { FC, ReactNode } from 'react';
 import styled from 'styled-components';
 import { BORDER_MAX, BORDER_MIN } from '^/constants';
+import useStatus from '^/store';
+import { Who } from '^/types';
 
 interface Props {
   row: number;
@@ -29,10 +31,35 @@ const BoardButton: FC<Props> = ({ row, col }) => {
     throw Error('Out of border range');
   }
 
+  const isThisAvailable = useStatus((status) => status.gameStatus.isAvailable[row][col]);
+  const putPiece = useStatus((status) => status.putPiece);
+  const currentPiece: Who = useStatus((status) => status.gameStatus.boardStatus[row][col]);
+
+  const handleOnClick: () => void = () => {
+    if (!isThisAvailable) {
+      return;
+    }
+
+    putPiece({ row, col });
+  };
+
+  const iconToBeRendered: ReactNode = (() => {
+    switch (currentPiece) {
+      case Who.PLAYER_1:
+        return '⚫';
+      case Who.PLAYER_2:
+        return '⚪';
+      default:
+        return isThisAvailable ? '✔' : undefined;
+    }
+  })();
+
   return (
-    <Root>
-      {/* Draft layout */}
-      ⚪
+    <Root
+      disabled={!isThisAvailable}
+      onClick={handleOnClick}
+    >
+      {iconToBeRendered}
     </Root>
   );
 };

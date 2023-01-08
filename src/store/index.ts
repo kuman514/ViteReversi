@@ -97,14 +97,28 @@ const useStatus = create<AppStatus>()((set) => ({
         curRow: row + rowDir,
         curCol: col + colDir,
       };
+
       while (
         BORDER_MIN <= curRow && curRow <= BORDER_MAX
         && BORDER_MIN <= curCol && curCol <= BORDER_MAX
         && reparsedBoardStatusCopy[curRow][curCol] === currentOpponent
       ) {
-        reparsedBoardStatusCopy[curRow][curCol] = currentTurn;
         curRow += rowDir;
         curCol += colDir;
+      }
+
+      if (
+        BORDER_MIN <= curRow && curRow <= BORDER_MAX
+        && BORDER_MIN <= curCol && curCol <= BORDER_MAX
+        && reparsedBoardStatusCopy[curRow][curCol] === currentTurn
+      ) {
+        curRow -= rowDir;
+        curCol -= colDir;
+        while (reparsedBoardStatusCopy[curRow][curCol] === currentOpponent) {
+          reparsedBoardStatusCopy[curRow][curCol] = currentTurn;
+          curRow -= rowDir;
+          curCol -= colDir;
+        }
       }
     });
 
@@ -128,28 +142,43 @@ const useStatus = create<AppStatus>()((set) => ({
     newHistory.push({ row, col });
 
     // TODO: scan available for next player
-    const deepCopiedIsAvailable: string = JSON.stringify(isAvailable);
-    const reparsedIsAvailableCopy: boolean[][] = JSON.parse(deepCopiedIsAvailable);
+    const newIsAvailableCopy: boolean[][] = Array.from(
+      { length: LENGTH },
+      () => Array.from({ length: LENGTH }, () => false),
+    );
     reparsedBoardStatusCopy[row][col] = currentTurn;
     const nextPlayer: Who = currentOpponent;
     for (let r = BORDER_MIN; r <= BORDER_MAX; r++) {
       for (let c = BORDER_MIN; c <= BORDER_MAX; c++) {
-        reparsedIsAvailableCopy[r][c] = direction.map(({ row: rowDir, col: colDir }) => {
+        if (reparsedBoardStatusCopy[r][c] !== Who.EMPTY) {
+          continue;
+        }
+
+        // TODO: fix error about this
+        newIsAvailableCopy[r][c] = direction.map(({ row: rowDir, col: colDir }) => {
           let { curRow, curCol } = {
             curRow: r + rowDir,
             curCol: c + colDir,
           };
-          let availablePieces = 0;
+
+          let distance = 0;
+
           while (
             BORDER_MIN <= curRow && curRow <= BORDER_MAX
             && BORDER_MIN <= curCol && curCol <= BORDER_MAX
             && reparsedBoardStatusCopy[curRow][curCol] === currentTurn
           ) {
-            availablePieces++;
+            distance++;
             curRow += rowDir;
             curCol += colDir;
           }
-          return availablePieces > 0;
+
+          return (
+            BORDER_MIN <= curRow && curRow <= BORDER_MAX
+            && BORDER_MIN <= curCol && curCol <= BORDER_MAX
+            && reparsedBoardStatusCopy[curRow][curCol] === nextPlayer
+            && distance > 0
+          );
         }).some((isPossible) => isPossible);
       }
     }
@@ -159,7 +188,7 @@ const useStatus = create<AppStatus>()((set) => ({
         ...gameStatus,
         boardStatus: reparsedBoardStatusCopy,
         currentTurn: nextPlayer,
-        isAvailable: reparsedIsAvailableCopy,
+        isAvailable: newIsAvailableCopy,
         pieceCount,
         history: newHistory,
       },
