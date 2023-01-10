@@ -37,10 +37,15 @@ const BoardButton: FC<Props> = ({ row, col }) => {
     throw Error('Out of border range');
   }
 
-  const isThisAvailable = useStatus((status) => status.gameStatus.isAvailable[row][col]);
-  const putPiece = useStatus((status) => status.putPiece);
-  const currentPiece: Who = useStatus((status) => status.gameStatus.boardStatus[row][col]);
-  const currentTurn: Who = useStatus((status) => status.gameStatus.currentTurn);
+  const {
+    putPiece,
+    gameStatus: {
+      isAvailable, boardStatus, currentTurn,
+    },
+  } = useStatus();
+
+  const isThisAvailable = isAvailable;
+  const currentPiece: Who = boardStatus[row][col];
 
   const handleOnClick: () => void = () => {
     if (!isThisAvailable) {
