@@ -4,6 +4,12 @@ import { BORDER_MAX, BORDER_MIN } from '^/constants';
 import useStatus from '^/store';
 import { Who } from '^/types';
 
+const availableIndicator: Record<Who, ReactNode> = {
+  [Who.PLAYER_1]: '🔸',
+  [Who.PLAYER_2]: '🔹',
+  [Who.EMPTY]: undefined,
+};
+
 interface Props {
   row: number;
   col: number;
@@ -34,6 +40,7 @@ const BoardButton: FC<Props> = ({ row, col }) => {
   const isThisAvailable = useStatus((status) => status.gameStatus.isAvailable[row][col]);
   const putPiece = useStatus((status) => status.putPiece);
   const currentPiece: Who = useStatus((status) => status.gameStatus.boardStatus[row][col]);
+  const currentTurn: Who = useStatus((status) => status.gameStatus.currentTurn);
 
   const handleOnClick: () => void = () => {
     if (!isThisAvailable) {
@@ -50,7 +57,7 @@ const BoardButton: FC<Props> = ({ row, col }) => {
       case Who.PLAYER_2:
         return '⚪';
       default:
-        return isThisAvailable ? '✔' : undefined;
+        return isThisAvailable ? availableIndicator[currentTurn] : undefined;
     }
   })();
 
