@@ -44,7 +44,7 @@ const BoardButton: FC<Props> = ({ row, col }) => {
     },
   } = useStatus();
 
-  const isThisAvailable = isAvailable;
+  const isThisAvailable = isAvailable[row][col];
   const currentPiece: Who = boardStatus[row][col];
 
   const handleOnClick: () => void = () => {

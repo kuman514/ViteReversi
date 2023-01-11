@@ -154,7 +154,6 @@ const useStatus = create<AppStatus>()((set) => ({
           continue;
         }
 
-        // TODO: fix error about this
         newIsAvailableCopy[r][c] = direction.map(({ row: rowDir, col: colDir }) => {
           let { curRow, curCol } = {
             curRow: r + rowDir,
@@ -183,6 +182,29 @@ const useStatus = create<AppStatus>()((set) => ({
       }
     }
 
+    // Check continuable and determine winner
+    const isContinuable: boolean = (() => {
+      for (let i = BORDER_MIN; i <= BORDER_MAX; i++) {
+        for (let j = BORDER_MIN; j <= BORDER_MAX; j++) {
+          if (newIsAvailableCopy[i][j]) {
+            return true;
+          }
+        }
+      }
+      return false;
+    })();
+    const newWinner: Who = isContinuable
+      ? Who.EMPTY
+      : (() => {
+        if (pieceCount[Who.PLAYER_1] > pieceCount[Who.PLAYER_2]) {
+          return Who.PLAYER_1;
+        }
+        if (pieceCount[Who.PLAYER_1] < pieceCount[Who.PLAYER_2]) {
+          return Who.PLAYER_2;
+        }
+        return Who.EMPTY;
+      })();
+
     return {
       gameStatus: {
         ...gameStatus,
@@ -191,6 +213,7 @@ const useStatus = create<AppStatus>()((set) => ({
         isAvailable: newIsAvailableCopy,
         pieceCount,
         history: newHistory,
+        winner: newWinner,
       },
     };
   }),

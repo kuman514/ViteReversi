@@ -105,6 +105,9 @@ module.exports = {
         'no-continue': [
           'off',
         ],
+        'react/jsx-props-no-spreading': [
+          'off',
+        ],
       },
     },
   ],
