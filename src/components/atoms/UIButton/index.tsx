@@ -1,17 +1,48 @@
+import { Button } from '@chakra-ui/react';
+import React, { FC, ReactElement, ReactNode } from 'react';
 import styled from 'styled-components';
+import { ChakraUIButtonColorScheme, ChakraUIButtonSize, ChakraUIButtonVariant } from '^/types';
 
-const UIButton = styled.button`
-  all: unset;
+interface ButtonFontWrapperProps {
+  fontSize?: string;
+}
 
-  border: 1px solid black;
-  font-size: 2vmin;
-  padding: 1vmin;
-
-  cursor: pointer;
-
-  &:hover {
-    background-color: black;
-  }
+const ButtonFontWrapper = styled.span<ButtonFontWrapperProps>`
+  font-size: ${({ fontSize }) => fontSize};
 `;
+
+interface Props {
+  children?: ReactNode;
+  variant?: ChakraUIButtonVariant;
+  colorScheme?: ChakraUIButtonColorScheme;
+  buttonSize?: ChakraUIButtonSize;
+  leftIcon?: ReactElement;
+  rightIcon?: ReactElement;
+  fontSize?: string;
+}
+
+const UIButton: FC<Props> = ({
+  children,
+  variant,
+  colorScheme,
+  buttonSize,
+  leftIcon,
+  rightIcon,
+  fontSize,
+}) => (
+  <Button
+    {...{
+      variant,
+      colorScheme,
+      buttonSize,
+      leftIcon,
+      rightIcon,
+    }}
+  >
+    <ButtonFontWrapper fontSize={fontSize}>
+      {children}
+    </ButtonFontWrapper>
+  </Button>
+);
 
 export default UIButton;

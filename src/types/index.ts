@@ -29,3 +29,38 @@ export interface AppStatus {
   putPiece: ({ row, col }: { row: number; col: number; }) => void;
   reset: () => void;
 }
+
+export enum ChakraUIButtonVariant {
+  SOLID = 'solid',
+  OUTLINE = 'outline',
+  GHOST = 'ghost',
+  LINK = 'link',
+}
+
+export enum ChakraUIButtonColorScheme {
+  WHITEALPHA = 'whiteAlpha',
+  BLACKALPHA = 'blackAlpha',
+  GRAY = 'gray',
+  RED = 'red',
+  ORANGE = 'orange',
+  YELLOW = 'yellow',
+  GREEN = 'green',
+  TEAL = 'teal',
+  BLUE = 'blue',
+  CYAN = 'cyan',
+  PURPLE = 'purple',
+  PINK = 'pink',
+  LINKEDIN = 'linkedin',
+  FACEBOOK = 'facebook',
+  MESSENGER = 'messenger',
+  WHATSAPP = 'whatsapp',
+  TWITTER = 'twitter',
+  TELEGRAM = 'telegram',
+}
+
+export enum ChakraUIButtonSize {
+  LARGE = 'lg',
+  MID = 'md',
+  SMALL = 'sm',
+  TINY = 'xs',
+}
