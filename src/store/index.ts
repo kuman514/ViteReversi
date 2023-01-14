@@ -141,7 +141,7 @@ const useStatus = create<AppStatus>()((set) => ({
     const newHistory: History = Array.from(history);
     newHistory.push({ row, col });
 
-    // TODO: scan available for next player
+    // Scan available for next player
     const newIsAvailableCopy: boolean[][] = Array.from(
       { length: LENGTH },
       () => Array.from({ length: LENGTH }, () => false),
