@@ -19,6 +19,7 @@ interface Props {
   leftIcon?: ReactElement;
   rightIcon?: ReactElement;
   fontSize?: string;
+  onClick?: () => void;
 }
 
 const UIButton: FC<Props> = ({
@@ -29,6 +30,7 @@ const UIButton: FC<Props> = ({
   leftIcon,
   rightIcon,
   fontSize,
+  onClick,
 }) => (
   <Button
     {...{
@@ -37,6 +39,7 @@ const UIButton: FC<Props> = ({
       buttonSize,
       leftIcon,
       rightIcon,
+      onClick,
     }}
   >
     <ButtonFontWrapper fontSize={fontSize}>
