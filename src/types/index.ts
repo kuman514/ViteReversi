@@ -13,7 +13,14 @@ export type BoardStatus = Who[][];
 export interface BoardCoordinate {
   row: number; col: number;
 }
-export type History = BoardCoordinate[];
+
+export type BoardStatusHistory = BoardStatus[];
+export type IsAvailableGistory = boolean[][][];
+export type History = {
+  coordHistory: BoardCoordinate;
+  boardStatusHistory: BoardStatusHistory;
+  isAvailableHistory: IsAvailableGistory;
+};
 
 export interface GameStatus {
   boardStatus: BoardStatus;
@@ -21,7 +28,7 @@ export interface GameStatus {
   isAvailable: boolean[][];
   pieceCount: PieceCount;
   winner: Who;
-  history: History;
+  history: History[];
 }
 
 export interface AppStatus {

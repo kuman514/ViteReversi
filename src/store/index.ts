@@ -6,7 +6,6 @@ import {
   GameStatus,
   PieceCount,
   Who,
-  History,
 } from '^/types';
 import { BORDER_MAX, BORDER_MIN, LENGTH } from '^/constants';
 
@@ -65,7 +64,7 @@ const useStatus = create<AppStatus>()((set) => ({
   gameStatus: returnCopiedInitialGameStatus(),
   putPiece: ({ row, col }) => set(({ gameStatus }) => {
     const {
-      boardStatus, isAvailable, currentTurn, history,
+      boardStatus, isAvailable, currentTurn,
     } = gameStatus;
 
     if (
@@ -137,10 +136,6 @@ const useStatus = create<AppStatus>()((set) => ({
       }
     }
 
-    // Append history
-    const newHistory: History = Array.from(history);
-    newHistory.push({ row, col });
-
     // Scan available for next player
     const newIsAvailableCopy: boolean[][] = Array.from(
       { length: LENGTH },
@@ -205,6 +200,8 @@ const useStatus = create<AppStatus>()((set) => ({
         return Who.EMPTY;
       })();
 
+    // TODO: Append history
+
     return {
       gameStatus: {
         ...gameStatus,
@@ -212,7 +209,6 @@ const useStatus = create<AppStatus>()((set) => ({
         currentTurn: nextPlayer,
         isAvailable: newIsAvailableCopy,
         pieceCount,
-        history: newHistory,
         winner: newWinner,
       },
     };
