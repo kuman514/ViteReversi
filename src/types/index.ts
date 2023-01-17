@@ -14,8 +14,8 @@ export interface BoardCoordinate {
   row: number; col: number;
 }
 
-export type BoardStatusHistory = BoardStatus[];
-export type IsAvailableGistory = boolean[][][];
+export type BoardStatusHistory = BoardStatus;
+export type IsAvailableGistory = boolean[][];
 export type History = {
   coordHistory: BoardCoordinate;
   boardStatusHistory: BoardStatusHistory;
@@ -35,6 +35,7 @@ export interface AppStatus {
   gameStatus: GameStatus;
   putPiece: ({ row, col }: { row: number; col: number; }) => void;
   reset: () => void;
+  undo: () => void;
 }
 
 export enum ChakraUIButtonVariant {

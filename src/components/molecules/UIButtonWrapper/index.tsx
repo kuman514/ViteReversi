@@ -10,10 +10,19 @@ const Root = styled.div`
 `;
 
 const UIButtonWrapper: FC<{}> = () => {
-  const { reset } = useStatus();
+  const { undo, reset } = useStatus();
   return (
     <Root>
       <Stack direction="row" spacing={4} align="center">
+        <UIButton
+          buttonSize={ChakraUIButtonSize.SMALL}
+          variant={ChakraUIButtonVariant.OUTLINE}
+          colorScheme={ChakraUIButtonColorScheme.RED}
+          fontSize="2vmin"
+          onClick={undo}
+        >
+          Undo
+        </UIButton>
         <UIButton
           buttonSize={ChakraUIButtonSize.SMALL}
           variant={ChakraUIButtonVariant.OUTLINE}

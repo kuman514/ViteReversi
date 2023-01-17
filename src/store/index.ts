@@ -6,6 +6,7 @@ import {
   GameStatus,
   PieceCount,
   Who,
+  History,
 } from '^/types';
 import { BORDER_MAX, BORDER_MIN, LENGTH } from '^/constants';
 
@@ -20,38 +21,46 @@ const direction: BoardCoordinate[] = [
   { row: -1, col: -1 },
 ];
 
+const generateEmptyBoard: () => BoardStatus = () => {
+  const emptyBoard: BoardStatus = Array.from(
+    { length: LENGTH },
+    () => Array.from({ length: LENGTH }, () => Who.EMPTY),
+  );
+  const center = Math.floor(BORDER_MAX / 2);
+  emptyBoard[center][center] = Who.PLAYER_1;
+  emptyBoard[center][center + 1] = Who.PLAYER_2;
+  emptyBoard[center + 1][center] = Who.PLAYER_2;
+  emptyBoard[center + 1][center + 1] = Who.PLAYER_1;
+  return emptyBoard;
+};
+
+const generateEmptyAvailable: () => boolean[][] = () => {
+  const emptyBoard: boolean[][] = Array.from(
+    { length: LENGTH },
+    () => Array.from({ length: LENGTH }, () => false),
+  );
+  const center = Math.floor(BORDER_MAX / 2);
+  emptyBoard[center - 1][center + 1] = true;
+  emptyBoard[center][center + 2] = true;
+  emptyBoard[center + 2][center] = true;
+  emptyBoard[center + 1][center - 1] = true;
+  return emptyBoard;
+};
+
 const initialGameStatus: GameStatus = {
-  boardStatus: (() => {
-    const emptyBoard: BoardStatus = Array.from(
-      { length: LENGTH },
-      () => Array.from({ length: LENGTH }, () => Who.EMPTY),
-    );
-    const center = Math.floor(BORDER_MAX / 2);
-    emptyBoard[center][center] = Who.PLAYER_1;
-    emptyBoard[center][center + 1] = Who.PLAYER_2;
-    emptyBoard[center + 1][center] = Who.PLAYER_2;
-    emptyBoard[center + 1][center + 1] = Who.PLAYER_1;
-    return emptyBoard;
-  })(),
-  isAvailable: (() => {
-    const emptyBoard: boolean[][] = Array.from(
-      { length: LENGTH },
-      () => Array.from({ length: LENGTH }, () => false),
-    );
-    const center = Math.floor(BORDER_MAX / 2);
-    emptyBoard[center - 1][center + 1] = true;
-    emptyBoard[center][center + 2] = true;
-    emptyBoard[center + 2][center] = true;
-    emptyBoard[center + 1][center - 1] = true;
-    return emptyBoard;
-  })(),
+  boardStatus: generateEmptyBoard(),
+  isAvailable: generateEmptyAvailable(),
   currentTurn: Who.PLAYER_1,
   pieceCount: {
     [Who.PLAYER_1]: 0,
     [Who.PLAYER_2]: 0,
   },
   winner: Who.EMPTY,
-  history: [],
+  history: [{
+    coordHistory: { row: -1, col: -1 },
+    boardStatusHistory: generateEmptyBoard(),
+    isAvailableHistory: generateEmptyAvailable(),
+  }],
 };
 
 const returnCopiedInitialGameStatus: () => GameStatus = () => {
@@ -64,7 +73,7 @@ const useStatus = create<AppStatus>()((set) => ({
   gameStatus: returnCopiedInitialGameStatus(),
   putPiece: ({ row, col }) => set(({ gameStatus }) => {
     const {
-      boardStatus, isAvailable, currentTurn,
+      boardStatus, isAvailable, currentTurn, history,
     } = gameStatus;
 
     if (
@@ -150,11 +159,8 @@ const useStatus = create<AppStatus>()((set) => ({
         }
 
         newIsAvailableCopy[r][c] = direction.map(({ row: rowDir, col: colDir }) => {
-          let { curRow, curCol } = {
-            curRow: r + rowDir,
-            curCol: c + colDir,
-          };
-
+          let curRow: number = r + rowDir;
+          let curCol: number = c + colDir;
           let distance = 0;
 
           while (
@@ -200,7 +206,12 @@ const useStatus = create<AppStatus>()((set) => ({
         return Who.EMPTY;
       })();
 
-    // TODO: Append history
+    const newHistory: History[] = Array.from(history);
+    newHistory.push({
+      coordHistory: { row, col },
+      boardStatusHistory: reparsedBoardStatusCopy,
+      isAvailableHistory: newIsAvailableCopy,
+    });
 
     return {
       gameStatus: {
@@ -210,10 +221,60 @@ const useStatus = create<AppStatus>()((set) => ({
         isAvailable: newIsAvailableCopy,
         pieceCount,
         winner: newWinner,
+        history: newHistory,
       },
     };
   }),
   reset: () => set(() => ({ gameStatus: returnCopiedInitialGameStatus() })),
+  undo: () => set(({ gameStatus }) => {
+    const {
+      currentTurn, history,
+    } = gameStatus;
+
+    if (history.length <= 1) {
+      return { gameStatus };
+    }
+
+    const newHistory: History[] = Array.from(history);
+    newHistory.pop();
+
+    const nextPlayer: Who = (() => {
+      switch (currentTurn) {
+        case Who.PLAYER_1:
+          return Who.PLAYER_2;
+        case Who.PLAYER_2:
+          return Who.PLAYER_1;
+        default:
+          throw Error('There should be exactly 2 players.');
+      }
+    })();
+
+    const pieceCount: PieceCount = {
+      [Who.PLAYER_1]: 0,
+      [Who.PLAYER_2]: 0,
+    };
+    for (let i = BORDER_MIN; i <= BORDER_MAX; i++) {
+      for (let j = BORDER_MIN; j <= BORDER_MAX; j++) {
+        const currentPiece: Who = newHistory[newHistory.length - 1].boardStatusHistory[i][j];
+        if (currentPiece === Who.EMPTY) {
+          continue;
+        }
+        pieceCount[currentPiece]++;
+      }
+    }
+
+    return {
+      gameStatus: {
+        ...gameStatus,
+        boardStatus: newHistory[newHistory.length - 1].boardStatusHistory,
+        currentTurn: nextPlayer,
+        isAvailable: newHistory[newHistory.length - 1].isAvailableHistory,
+        pieceCount,
+        winner: Who.EMPTY,
+        history: newHistory,
+      },
+    };
+  }),
 }));
 
 export default useStatus;
