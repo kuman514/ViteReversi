@@ -37,6 +37,19 @@ export interface GameAction {
 }
 export type GameStore = GameState & GameAction;
 
+export enum Theme {
+  BRIGHT = 'bright',
+  DARK = 'dark',
+}
+
+export interface PreferenceState {
+  theme: Theme;
+}
+export interface PreferenceAction {
+  setTheme: (newTheme: Theme) => void;
+}
+export type PreferenceStore = PreferenceState & PreferenceAction;
+
 export enum ChakraUIButtonVariant {
   SOLID = 'solid',
   OUTLINE = 'outline',
