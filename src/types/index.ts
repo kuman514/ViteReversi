@@ -9,34 +9,33 @@ export interface PieceCount {
   [Who.PLAYER_2]: number;
 }
 
-export type BoardStatus = Who[][];
+export type BoardState = Who[][];
 export interface BoardCoordinate {
   row: number; col: number;
 }
 
-export type BoardStatusHistory = BoardStatus;
+export type BoardStateHistory = BoardState;
 export type IsAvailableGistory = boolean[][];
 export type History = {
   coordHistory: BoardCoordinate;
-  boardStatusHistory: BoardStatusHistory;
+  boardStateHistory: BoardStateHistory;
   isAvailableHistory: IsAvailableGistory;
 };
 
-export interface GameStatus {
-  boardStatus: BoardStatus;
+export interface GameState {
+  boardState: BoardState;
   currentTurn: Who;
   isAvailable: boolean[][];
   pieceCount: PieceCount;
   winner: Who;
   history: History[];
 }
-
-export interface AppStatus {
-  gameStatus: GameStatus;
+export interface GameAction {
   putPiece: ({ row, col }: { row: number; col: number; }) => void;
   reset: () => void;
   undo: () => void;
 }
+export type GameStore = GameState & GameAction;
 
 export enum ChakraUIButtonVariant {
   SOLID = 'solid',

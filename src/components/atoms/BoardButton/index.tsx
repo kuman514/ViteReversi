@@ -1,7 +1,7 @@
 import React, { FC, ReactNode } from 'react';
 import styled from 'styled-components';
 import { BORDER_MAX, BORDER_MIN } from '^/constants';
-import useStatus from '^/store';
+import { useGameStore } from '^/store';
 import { Who } from '^/types';
 
 const availableIndicator: Record<Who, ReactNode> = {
@@ -38,14 +38,11 @@ const BoardButton: FC<Props> = ({ row, col }) => {
   }
 
   const {
-    putPiece,
-    gameStatus: {
-      isAvailable, boardStatus, currentTurn,
-    },
-  } = useStatus();
+    isAvailable, boardState, currentTurn, putPiece,
+  } = useGameStore();
 
   const isThisAvailable = isAvailable[row][col];
-  const currentPiece: Who = boardStatus[row][col];
+  const currentPiece: Who = boardState[row][col];
 
   const handleOnClick: () => void = () => {
     if (!isThisAvailable) {

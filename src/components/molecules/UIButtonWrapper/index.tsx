@@ -2,7 +2,7 @@ import { Stack } from '@chakra-ui/react';
 import React, { FC } from 'react';
 import styled from 'styled-components';
 import UIButton from '^/components/atoms/UIButton';
-import useStatus from '^/store';
+import { useGameStore } from '^/store';
 import { ChakraUIButtonColorScheme, ChakraUIButtonSize, ChakraUIButtonVariant } from '^/types';
 
 const Root = styled.div`
@@ -10,7 +10,7 @@ const Root = styled.div`
 `;
 
 const UIButtonWrapper: FC<{}> = () => {
-  const { undo, reset } = useStatus();
+  const { undo, reset } = useGameStore();
   return (
     <Root>
       <Stack direction="row" spacing={4} align="center">
