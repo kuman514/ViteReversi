@@ -4,8 +4,8 @@ import BoardRow from '^/components/molecules/BoardRow';
 import { BORDER_MAX, BORDER_MIN } from '^/constants';
 
 const Root = styled.div`
-  border-top: 1px solid black;
-  border-left: 1px solid black;
+  border-top: 1px solid var(--theme-font-color);
+  border-left: 1px solid var(--theme-font-color);
 
   width: 75%;
   height: 75%;

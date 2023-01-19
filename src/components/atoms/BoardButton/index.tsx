@@ -18,8 +18,8 @@ interface Props {
 const Root = styled.button`
   all: unset;
 
-  border-bottom: 1px solid black;
-  border-right: 1px solid black;
+  border-bottom: 1px solid var(--theme-font-color);
+  border-right: 1px solid var(--theme-font-color);
 
   font-size: 5vmin;
 

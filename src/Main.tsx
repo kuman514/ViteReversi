@@ -4,23 +4,33 @@ import Game from '^/components/pages/Game';
 import usePreferenceStore from '^/store/preference';
 import { Theme } from '^/types';
 
-const GlobalStyle = createGlobalStyle`
+const themeBgColor: Record<Theme, string> = {
+  [Theme.BRIGHT]: '#FFFFFF',
+  [Theme.DARK]: '#1A1A1A',
+};
+
+const themeFontColor: Record<Theme, string> = {
+  [Theme.BRIGHT]: '#000000',
+  [Theme.DARK]: '#FFFFFF',
+};
+
+interface GlobalProps {
+  selectedTheme: Theme;
+}
+
+const GlobalStyle = createGlobalStyle<GlobalProps>`
   * {
     margin: 0;
     box-sizing: border-box;
   }
+
+  :root {
+    --theme-bg-color: ${({ selectedTheme }) => themeBgColor[selectedTheme]};
+    --theme-font-color: ${({ selectedTheme }) => themeFontColor[selectedTheme]};
+  }
 `;
 
-const themeColor: Record<Theme, string> = {
-  [Theme.BRIGHT]: '#FFFFFF',
-  [Theme.DARK]: '#1a1a1a',
-};
-
-interface RootProps {
-  selectedTheme: Theme;
-}
-
-const Root = styled.div<RootProps>`
+const Root = styled.div`
   width: 100vw;
   height: 100vh;
 
@@ -28,7 +38,7 @@ const Root = styled.div<RootProps>`
   justify-content: center;
   align-items: center;
 
-  background-color: ${({ selectedTheme }) => themeColor[selectedTheme]};
+  background-color: var(--theme-bg-color);
 `;
 
 const Main: FC<{}> = () => {
@@ -36,8 +46,8 @@ const Main: FC<{}> = () => {
 
   return (
     <>
-      <GlobalStyle />
-      <Root selectedTheme={theme}>
+      <GlobalStyle selectedTheme={theme} />
+      <Root>
         <Game />
       </Root>
     </>
