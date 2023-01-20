@@ -52,8 +52,8 @@ const initialGameStore: GameState = {
   isAvailable: generateEmptyAvailable(),
   currentTurn: Who.PLAYER_1,
   pieceCount: {
-    [Who.PLAYER_1]: 0,
-    [Who.PLAYER_2]: 0,
+    [Who.PLAYER_1]: 2,
+    [Who.PLAYER_2]: 2,
   },
   winner: Who.EMPTY,
   history: [{
