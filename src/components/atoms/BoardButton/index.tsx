@@ -18,6 +18,8 @@ interface Props {
 const Root = styled.button`
   all: unset;
 
+  background-color: #55AF55;
+
   border-bottom: 1px solid var(--theme-font-color);
   border-right: 1px solid var(--theme-font-color);
 
@@ -28,7 +30,7 @@ const Root = styled.button`
   cursor: pointer;
 
   &:hover {
-    background-color: black;
+    background-color: #D8245A;
   }
 `;
 
