@@ -1,6 +1,6 @@
 import React, { FC, ReactNode } from 'react';
 import styled from 'styled-components';
-import { BORDER_MAX, BORDER_MIN } from '^/constants';
+import { BORDER_MAX, BORDER_MIN, piece } from '^/constants';
 import { useGameStore } from '^/store';
 import { Who } from '^/types';
 
@@ -56,10 +56,8 @@ const BoardButton: FC<Props> = ({ row, col }) => {
 
   const iconToBeRendered: ReactNode = (() => {
     switch (currentPiece) {
-      case Who.PLAYER_1:
-        return '⚫';
-      case Who.PLAYER_2:
-        return '⚪';
+      case Who.PLAYER_1: case Who.PLAYER_2:
+        return piece[currentPiece];
       default:
         return isThisAvailable ? availableIndicator[currentTurn] : undefined;
     }

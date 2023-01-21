@@ -1,10 +1,9 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
 import Title from '^/components/atoms/Title';
-import PieceCountWrapper from '^/components/molecules/PieceCountWrapper';
-import UIButtonWrapper from '^/components/molecules/UIButtonWrapper';
 import WinnerModal from '^/components/molecules/WinnerModal';
 import Board from '^/components/organisms/Board';
+import BottomUIWrapper from '^/components/organisms/BottomUIWrapper';
 
 const Root = styled.div`
   width: 100vmin;
@@ -20,8 +19,7 @@ const Game: FC<{}> = () => (
   <Root>
     <Title />
     <Board />
-    <UIButtonWrapper />
-    <PieceCountWrapper />
+    <BottomUIWrapper />
     <WinnerModal />
   </Root>
 );
