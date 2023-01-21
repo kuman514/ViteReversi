@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
 import Title from '^/components/atoms/Title';
+import PieceCountWrapper from '^/components/molecules/PieceCountWrapper';
 import UIButtonWrapper from '^/components/molecules/UIButtonWrapper';
 import WinnerModal from '^/components/molecules/WinnerModal';
 import Board from '^/components/organisms/Board';
@@ -20,6 +21,7 @@ const Game: FC<{}> = () => (
     <Title />
     <Board />
     <UIButtonWrapper />
+    <PieceCountWrapper />
     <WinnerModal />
   </Root>
 );
