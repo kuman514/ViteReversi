@@ -9,12 +9,12 @@ interface RootProps {
 
 const colorPalette: Record<Who, RootProps> = {
   [Who.PLAYER_1]: {
-    fontColor: '#737373',
-    outerGlowColor: '#fc8003',
+    fontColor: '#DFDFDF',
+    outerGlowColor: '#FC8003',
   },
   [Who.PLAYER_2]: {
-    fontColor: '#bababa',
-    outerGlowColor: '#0398fc',
+    fontColor: '#DFDFDF',
+    outerGlowColor: '#0398FC',
   },
   [Who.EMPTY]: {},
 };
@@ -22,7 +22,8 @@ const colorPalette: Record<Who, RootProps> = {
 const Root = styled.div<RootProps>`
   font-size: 9vmin;
   color: ${({ fontColor }) => fontColor};
-  text-shadow: 2px 2px 10px ${({ outerGlowColor }) => outerGlowColor};
+  text-shadow: 0px 0px 20px ${({ outerGlowColor }) => outerGlowColor};
+  z-index: 1001;
 `;
 
 interface Props {

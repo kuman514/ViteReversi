@@ -10,7 +10,7 @@ const WinnerModal: FC = () => {
   return winner !== Who.EMPTY ? (
     <ModalWrapper>
       <ModalBackground />
-      <WinnerModalTitle title={`Player ${winner} Wins!`} />
+      <WinnerModalTitle winner={winner} title={`Player ${winner} Wins!`} />
     </ModalWrapper>
   ) : null;
 };
