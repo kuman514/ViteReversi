@@ -4,7 +4,11 @@ import PieceCount from '^/components/atoms/PieceCount';
 import { Who } from '^/types';
 
 const Root = styled.div`
-  font-size: 5vmin;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 2.5vmin;
   font-weight: 600;
   font-variant-numeric: tabular-nums;
   color: var(--theme-font-color);

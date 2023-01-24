@@ -9,7 +9,6 @@ import {
 } from '^/types';
 
 const Root = styled.div`
-  margin-top: 1vmin;
 `;
 
 const UIButtonWrapper: FC<{}> = () => {

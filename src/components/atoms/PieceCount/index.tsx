@@ -15,6 +15,7 @@ interface RootProps {
 }
 
 const Root = styled.span<RootProps>`
+  padding: 0.2vmin 0.5vmin;
   background-color: ${({ turnColor }) => turnColor};
   border-radius: 1vmin;
 `;
@@ -25,7 +26,7 @@ interface Props {
 
 const PieceCount: FC<Props> = ({ player }) => {
   const { pieceCount, currentTurn } = useGameStore();
-  const thisPieceCount = String(pieceCount[player]).padStart(2, '0');
+  const thisPieceCount = (player !== Who.EMPTY) ? String(pieceCount[player]).padStart(2, '0') : '';
   const turnColor: string = (currentTurn === player) ? turnColorPicker[player] : '';
   return (
     <Root turnColor={turnColor}>

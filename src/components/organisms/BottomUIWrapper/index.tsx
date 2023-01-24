@@ -9,6 +9,7 @@ const Root = styled.div`
   justify-content: center;
   align-items: center;
   column-gap: 20px;
+  margin-top: 1vmin;
 `;
 
 const BottomUIWrapper: FC = () => (
