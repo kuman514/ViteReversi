@@ -10,3 +10,9 @@ export const piece: Record<Who, ReactNode> = {
   [Who.PLAYER_2]: '⚪',
   [Who.EMPTY]: undefined,
 };
+
+export const playerPallete: Record<Who, string> = {
+  [Who.PLAYER_1]: '#ffa600',
+  [Who.PLAYER_2]: '#008cff',
+  [Who.EMPTY]: '',
+};
