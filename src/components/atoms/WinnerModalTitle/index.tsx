@@ -28,6 +28,22 @@ const Root = styled.div<RootProps>`
 
   display: flex;
   flex-direction: column;
+
+  & > span {
+    animation: WinnerEffectAnimation ease-in-out 1500ms;
+    animation-iteration-count: infinite;
+    @keyframes WinnerEffectAnimation {
+      0% {
+        text-shadow: 0px 0px 0px ${({ outerGlowColor }) => outerGlowColor};
+      }
+      50% {
+        text-shadow: 0px 0px 20px ${({ outerGlowColor }) => outerGlowColor};
+      }
+      100% {
+        text-shadow: 0px 0px 0px ${({ outerGlowColor }) => outerGlowColor};
+      }
+    }
+  }
 `;
 
 interface Props {
@@ -48,7 +64,9 @@ const WinnerModalTitle: FC<Props> = ({
       fontColor={playerPallete[winner]}
       outerGlowColor={playerPallete[winner]}
     >
-      {title}
+      <span>
+        {title}
+      </span>
       <UIButton
         buttonSize={ChakraUIButtonSize.SMALL}
         variant={ChakraUIButtonVariant.SOLID}
