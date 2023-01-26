@@ -271,6 +271,7 @@ const useGameStore = create<GameStore>()((set) => ({
       pieceCount,
       winner: Who.EMPTY,
       history: newHistory,
+      isContinuable: true,
     };
   }),
 }));

@@ -47,6 +47,13 @@ const Root = styled.div<RootProps>`
   }
 `;
 
+const ButtonWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  column-gap: 2vmin;
+  width: 100%;
+`;
+
 interface Props {
   title?: string;
   winner?: Who;
@@ -55,7 +62,7 @@ interface Props {
 const WinnerModalTitle: FC<Props> = ({
   title, winner,
 }) => {
-  const { reset } = useGameStore();
+  const { undo, reset } = useGameStore();
   if (winner === undefined) {
     return null;
   }
@@ -68,15 +75,26 @@ const WinnerModalTitle: FC<Props> = ({
       <span>
         {title}
       </span>
-      <UIButton
-        buttonSize={ChakraUIButtonSize.SMALL}
-        variant={ChakraUIButtonVariant.SOLID}
-        colorScheme={chakraUiButtonColorScheme[winner]}
-        fontSize="2vmin"
-        onClick={reset}
-      >
-        Reset
-      </UIButton>
+      <ButtonWrapper>
+        <UIButton
+          buttonSize={ChakraUIButtonSize.SMALL}
+          variant={ChakraUIButtonVariant.SOLID}
+          colorScheme={chakraUiButtonColorScheme[winner]}
+          fontSize="2vmin"
+          onClick={undo}
+        >
+          Undo
+        </UIButton>
+        <UIButton
+          buttonSize={ChakraUIButtonSize.SMALL}
+          variant={ChakraUIButtonVariant.SOLID}
+          colorScheme={chakraUiButtonColorScheme[winner]}
+          fontSize="2vmin"
+          onClick={reset}
+        >
+          Reset
+        </UIButton>
+      </ButtonWrapper>
     </Root>
   );
 };
