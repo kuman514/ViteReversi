@@ -12,7 +12,7 @@ export const piece: Record<Who, ReactNode> = {
 };
 
 export const playerPallete: Record<Who, string> = {
-  [Who.PLAYER_1]: '#ffa600',
-  [Who.PLAYER_2]: '#008cff',
-  [Who.EMPTY]: '',
+  [Who.PLAYER_1]: '#FFA600',
+  [Who.PLAYER_2]: '#008CFF',
+  [Who.EMPTY]: '#ACACAC',
 };

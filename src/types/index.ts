@@ -26,6 +26,7 @@ export interface GameState {
   boardState: BoardState;
   currentTurn: Who;
   isAvailable: boolean[][];
+  isContinuable: boolean;
   pieceCount: PieceCount;
   winner: Who;
   history: History[];

@@ -10,9 +10,10 @@ import {
 } from '^/types';
 import UIButton from '../UIButton';
 
-const chakraUiButtonColorScheme: Partial<Record<Who, ChakraUIButtonColorScheme>> = {
+const chakraUiButtonColorScheme: Record<Who, ChakraUIButtonColorScheme> = {
   [Who.PLAYER_1]: ChakraUIButtonColorScheme.ORANGE,
   [Who.PLAYER_2]: ChakraUIButtonColorScheme.BLUE,
+  [Who.EMPTY]: ChakraUIButtonColorScheme.TEAL,
 };
 
 interface RootProps {
@@ -55,7 +56,7 @@ const WinnerModalTitle: FC<Props> = ({
   title, winner,
 }) => {
   const { reset } = useGameStore();
-  if (!winner) {
+  if (winner === undefined) {
     return null;
   }
 

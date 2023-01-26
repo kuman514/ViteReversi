@@ -61,6 +61,7 @@ const initialGameStore: GameState = {
     boardStateHistory: generateEmptyBoard(),
     isAvailableHistory: generateEmptyAvailable(),
   }],
+  isContinuable: true,
 };
 
 const returnCopiedInitialGameStore: () => GameState = () => {
@@ -221,6 +222,7 @@ const useGameStore = create<GameStore>()((set) => ({
       pieceCount,
       winner: newWinner,
       history: newHistory,
+      isContinuable,
     };
   }),
   reset: () => set(() => returnCopiedInitialGameStore()),

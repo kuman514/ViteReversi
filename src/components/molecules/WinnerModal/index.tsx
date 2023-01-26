@@ -6,11 +6,14 @@ import { useGameStore } from '^/store';
 import { Who } from '^/types';
 
 const WinnerModal: FC = () => {
-  const { winner } = useGameStore();
-  return winner !== Who.EMPTY ? (
+  const { winner, isContinuable } = useGameStore();
+  const whoIsWinner: string = winner !== Who.EMPTY
+    ? `Player ${winner} Wins!`
+    : 'Draw!';
+  return !isContinuable ? (
     <ModalWrapper>
       <ModalBackground />
-      <WinnerModalTitle winner={winner} title={`Player ${winner} Wins!`} />
+      <WinnerModalTitle winner={winner} title={whoIsWinner} />
     </ModalWrapper>
   ) : null;
 };
