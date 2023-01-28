@@ -1,20 +1,7 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
 import { playerPallete } from '^/constants';
-import { useGameStore } from '^/store';
-import {
-  ChakraUIButtonColorScheme,
-  ChakraUIButtonSize,
-  ChakraUIButtonVariant,
-  Who,
-} from '^/types';
-import UIButton from '../UIButton';
-
-const chakraUiButtonColorScheme: Record<Who, ChakraUIButtonColorScheme> = {
-  [Who.PLAYER_1]: ChakraUIButtonColorScheme.ORANGE,
-  [Who.PLAYER_2]: ChakraUIButtonColorScheme.BLUE,
-  [Who.EMPTY]: ChakraUIButtonColorScheme.TEAL,
-};
+import { Who } from '^/types';
 
 interface RootProps {
   fontColor?: string;
@@ -47,13 +34,6 @@ const Root = styled.div<RootProps>`
   }
 `;
 
-const ButtonWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  column-gap: 2vmin;
-  width: 100%;
-`;
-
 interface Props {
   title?: string;
   winner?: Who;
@@ -62,7 +42,6 @@ interface Props {
 const WinnerModalTitle: FC<Props> = ({
   title, winner,
 }) => {
-  const { undo, reset } = useGameStore();
   if (winner === undefined) {
     return null;
   }
@@ -75,26 +54,6 @@ const WinnerModalTitle: FC<Props> = ({
       <span>
         {title}
       </span>
-      <ButtonWrapper>
-        <UIButton
-          buttonSize={ChakraUIButtonSize.SMALL}
-          variant={ChakraUIButtonVariant.SOLID}
-          colorScheme={chakraUiButtonColorScheme[winner]}
-          fontSize="2vmin"
-          onClick={undo}
-        >
-          Undo
-        </UIButton>
-        <UIButton
-          buttonSize={ChakraUIButtonSize.SMALL}
-          variant={ChakraUIButtonVariant.SOLID}
-          colorScheme={chakraUiButtonColorScheme[winner]}
-          fontSize="2vmin"
-          onClick={reset}
-        >
-          Reset
-        </UIButton>
-      </ButtonWrapper>
     </Root>
   );
 };
