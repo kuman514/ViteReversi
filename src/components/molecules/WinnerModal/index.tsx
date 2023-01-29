@@ -11,6 +11,7 @@ import {
   ChakraUIButtonVariant,
   Who,
 } from '^/types';
+import PieceCountWrapper from '../PieceCountWrapper';
 
 const chakraUiButtonColorScheme: Record<Who, ChakraUIButtonColorScheme> = {
   [Who.PLAYER_1]: ChakraUIButtonColorScheme.ORANGE,
@@ -18,45 +19,62 @@ const chakraUiButtonColorScheme: Record<Who, ChakraUIButtonColorScheme> = {
   [Who.EMPTY]: ChakraUIButtonColorScheme.TEAL,
 };
 
+const ModalContentWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 1001;
+  row-gap: 1vmin;
+`;
+
+const ModalPieceCountWrapper = styled.div`
+  margin-bottom: 1vmin;
+`;
+
 const ButtonWrapper = styled.div`
   display: flex;
   justify-content: center;
   column-gap: 2vmin;
-  z-index: 1001;
 `;
 
 const WinnerModal: FC = () => {
   const {
     winner, isContinuable, undo, reset,
   } = useGameStore();
-  const whoIsWinner: string = winner !== Who.EMPTY
+  const whoIsWinner: string = (winner !== Who.EMPTY)
     ? `Player ${winner} Wins!`
     : 'Draw!';
 
   return !isContinuable ? (
     <ModalWrapper>
       <ModalBackground />
-      <WinnerModalTitle winner={winner} title={whoIsWinner} />
-      <ButtonWrapper>
-        <UIButton
-          buttonSize={ChakraUIButtonSize.SMALL}
-          variant={ChakraUIButtonVariant.SOLID}
-          colorScheme={chakraUiButtonColorScheme[winner]}
-          fontSize="2vmin"
-          onClick={undo}
-        >
-          Undo
-        </UIButton>
-        <UIButton
-          buttonSize={ChakraUIButtonSize.SMALL}
-          variant={ChakraUIButtonVariant.SOLID}
-          colorScheme={chakraUiButtonColorScheme[winner]}
-          fontSize="2vmin"
-          onClick={reset}
-        >
-          Reset
-        </UIButton>
-      </ButtonWrapper>
+      <ModalContentWrapper>
+        <WinnerModalTitle winner={winner} title={whoIsWinner} />
+        <ModalPieceCountWrapper>
+          <PieceCountWrapper />
+        </ModalPieceCountWrapper>
+        <ButtonWrapper>
+          <UIButton
+            buttonSize={ChakraUIButtonSize.SMALL}
+            variant={ChakraUIButtonVariant.SOLID}
+            colorScheme={chakraUiButtonColorScheme[winner]}
+            fontSize="2vmin"
+            onClick={undo}
+          >
+            Undo
+          </UIButton>
+          <UIButton
+            buttonSize={ChakraUIButtonSize.SMALL}
+            variant={ChakraUIButtonVariant.SOLID}
+            colorScheme={chakraUiButtonColorScheme[winner]}
+            fontSize="2vmin"
+            onClick={reset}
+          >
+            Reset
+          </UIButton>
+        </ButtonWrapper>
+      </ModalContentWrapper>
     </ModalWrapper>
   ) : null;
 };

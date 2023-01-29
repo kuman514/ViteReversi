@@ -12,12 +12,18 @@ const Root = styled.div`
   font-weight: 600;
   font-variant-numeric: tabular-nums;
   color: var(--theme-font-color);
+
+  column-gap: 1.25vmin;
 `;
 
-const PieceCountWrapper: FC = () => (
+interface Props {
+  isForGame?: boolean;
+}
+
+const PieceCountWrapper: FC<Props> = ({ isForGame }) => (
   <Root>
-    <PieceCount player={Who.PLAYER_1} />
-    <PieceCount player={Who.PLAYER_2} />
+    <PieceCount player={Who.PLAYER_1} isForGame={isForGame} />
+    <PieceCount player={Who.PLAYER_2} isForGame={isForGame} />
   </Root>
 );
 

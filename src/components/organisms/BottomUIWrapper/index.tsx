@@ -14,7 +14,7 @@ const Root = styled.div`
 
 const BottomUIWrapper: FC = () => (
   <Root>
-    <PieceCountWrapper />
+    <PieceCountWrapper isForGame />
     <UIButtonWrapper />
   </Root>
 );

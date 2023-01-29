@@ -16,12 +16,13 @@ const Root = styled.span<RootProps>`
 
 interface Props {
   player: Who;
+  isForGame?: boolean;
 }
 
-const PieceCount: FC<Props> = ({ player }) => {
+const PieceCount: FC<Props> = ({ player, isForGame }) => {
   const { pieceCount, currentTurn } = useGameStore();
   const thisPieceCount = (player !== Who.EMPTY) ? String(pieceCount[player]).padStart(2, '0') : '';
-  const turnColor: string = (currentTurn === player) ? playerPallete[player] : '';
+  const turnColor: string = (!isForGame || currentTurn === player) ? playerPallete[player] : '';
   return (
     <Root turnColor={turnColor}>
       {piece[player]}
