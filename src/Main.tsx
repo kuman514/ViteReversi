@@ -3,16 +3,7 @@ import styled, { createGlobalStyle } from 'styled-components';
 import Game from '^/components/pages/Game';
 import usePreferenceStore from '^/store/preference';
 import { Theme } from '^/types';
-
-const themeBgColor: Record<Theme, string> = {
-  [Theme.BRIGHT]: '#FFFFFF',
-  [Theme.DARK]: '#1A1A1A',
-};
-
-const themeFontColor: Record<Theme, string> = {
-  [Theme.BRIGHT]: '#000000',
-  [Theme.DARK]: '#FFFFFF',
-};
+import { themeBgColor, themeFontColor } from '^/constants';
 
 interface GlobalProps {
   selectedTheme: Theme;
