@@ -6,10 +6,7 @@ import UIButton from '^/components/atoms/UIButton';
 import WinnerModalTitle from '^/components/atoms/WinnerModalTitle';
 import { useGameStore } from '^/store';
 import {
-  ChakraUIButtonColorScheme,
-  ChakraUIButtonSize,
-  ChakraUIButtonVariant,
-  Who,
+  ChakraUIButtonColorScheme, ChakraUIButtonSize, ChakraUIButtonVariant, Who,
 } from '^/types';
 import PieceCountWrapper from '../PieceCountWrapper';
 
