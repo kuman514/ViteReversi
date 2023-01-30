@@ -1,6 +1,8 @@
 import React, { FC, ReactNode } from 'react';
 import styled from 'styled-components';
-import { BORDER_MAX, BORDER_MIN, piece } from '^/constants';
+import {
+  boardButtonColor, BORDER_MAX, BORDER_MIN, piece,
+} from '^/constants';
 import { useGameStore } from '^/store';
 import { Who } from '^/types';
 
@@ -18,7 +20,7 @@ interface Props {
 const Root = styled.button`
   all: unset;
 
-  background-color: #55AF55;
+  background-color: ${boardButtonColor.NORMAL};
 
   border-bottom: 1px solid var(--theme-font-color);
   border-right: 1px solid var(--theme-font-color);
@@ -30,7 +32,7 @@ const Root = styled.button`
   cursor: pointer;
 
   &:hover {
-    background-color: #D8245A;
+    background-color: ${boardButtonColor.HOVER};
   }
 `;
 

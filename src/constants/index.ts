@@ -26,3 +26,8 @@ export const themeFontColor: Record<Theme, string> = {
   [Theme.BRIGHT]: '#000000',
   [Theme.DARK]: '#FFFFFF',
 };
+
+export const boardButtonColor: Record<string, string> = {
+  NORMAL: '#55AF55',
+  HOVER: '#D8245A',
+};
