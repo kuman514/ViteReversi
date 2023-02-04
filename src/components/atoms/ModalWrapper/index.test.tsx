@@ -14,7 +14,7 @@ describe('ModalWrapper', () => {
     );
   });
 
-  test('should show the modal all the time', () => {
-    expect(screen.getByText(/Wrapper content/i)).toBeTruthy();
+  test('should show the modal all the time', async () => {
+    expect(await screen.getByText(/Wrapper content/i)).toBeTruthy();
   });
 });

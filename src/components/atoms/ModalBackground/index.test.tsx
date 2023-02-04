@@ -16,7 +16,7 @@ describe('ModalBackground', () => {
     );
   });
 
-  test('should show the modal all the time', () => {
-    expect(screen.getByText(/Content/i)).toBeTruthy();
+  test('should show the modal all the time', async () => {
+    expect(await screen.getByText(/Content/i)).toBeTruthy();
   });
 });
