@@ -1,5 +1,5 @@
 import {
-  assert, describe, expect, it, test,
+  assert, describe, expect, it,
 } from 'vitest';
 
 describe('Draft sample test', () => {
@@ -9,9 +9,5 @@ describe('Draft sample test', () => {
 
   it('Assert', () => {
     assert.equal(Math.sqrt(4), 2);
-  });
-
-  test.skip('Snapshot is skipped', () => {
-    expect({ foo: 'bar' }).toMatchSnapshot();
   });
 });
