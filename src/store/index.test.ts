@@ -35,10 +35,6 @@ const convertStringToBoard: (boardStr: string) => BoardState | undefined = (boar
 };
 
 describe('convertStringToBoard', () => {
-  beforeEach(() => {
-    useGameStore.getState().reset();
-  });
-
   it('should not throw in appropriate length', async () => {
     expect(convertStringToBoard(`
       00000000
