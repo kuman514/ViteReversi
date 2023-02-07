@@ -343,4 +343,35 @@ describe('Board Store State', () => {
     `));
     expect(useGameStore.getState().currentTurn).toEqual(Who.PLAYER_2);
   });
+
+  it('no invalid input', async () => {
+    expect(useGameStore.getState().boardState).toStrictEqual(convertStringToBoard(`
+      00000000
+      00000000
+      00000000
+      00012000
+      00021000
+      00000000
+      00000000
+      00000000
+    `));
+    expect(useGameStore.getState().currentTurn).toEqual(Who.PLAYER_1);
+
+    useGameStore.getState().putPiece({ row: 1, col: 6 });
+    useGameStore.getState().putPiece({ row: 3, col: 7 });
+    useGameStore.getState().putPiece({ row: 6, col: 4 });
+    useGameStore.getState().putPiece({ row: 2, col: 0 });
+
+    expect(useGameStore.getState().boardState).toStrictEqual(convertStringToBoard(`
+      00000000
+      00000000
+      00000000
+      00012000
+      00021000
+      00000000
+      00000000
+      00000000
+    `));
+    expect(useGameStore.getState().currentTurn).toEqual(Who.PLAYER_1);
+  });
 });
