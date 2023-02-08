@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
 import Game from '^/components/pages/Game';
-import usePreferenceStore from '^/store/preference';
+import { usePreferenceStore } from '^/store';
 import { Theme } from '^/types';
 import { themeBgColor, themeFontColor } from '^/constants';
 

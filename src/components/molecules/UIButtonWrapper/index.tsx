@@ -2,8 +2,7 @@ import { Stack } from '@chakra-ui/react';
 import React, { FC } from 'react';
 import styled from 'styled-components';
 import UIButton from '^/components/atoms/UIButton';
-import { useGameStore } from '^/store';
-import usePreferenceStore from '^/store/preference';
+import { useGameStore, usePreferenceStore } from '^/store';
 import {
   ChakraUIButtonColorScheme, ChakraUIButtonSize, ChakraUIButtonVariant, Theme,
 } from '^/types';
