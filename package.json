@@ -6,9 +6,9 @@
   "scripts": {
     "start": "vite --open",
     "lint": "yarn eslint src/**/*.{ts,tsx}",
-    "build": "yarn lint && tsc --noEmit && vite build",
-    "preview": "vite preview",
-    "test": "vitest"
+    "test": "vitest",
+    "build": "tsc --noEmit && yarn lint && yarn test --watch=false && vite build",
+    "preview": "vite preview"
   },
   "dependencies": {
     "@chakra-ui/react": "^2.4.8",
