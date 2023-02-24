@@ -36,6 +36,7 @@ const UIButtonWrapper: FC<{}> = () => {
           variant={ChakraUIButtonVariant.OUTLINE}
           colorScheme={ChakraUIButtonColorScheme.RED}
           fontSize="2vmin"
+          height="4.5vmin"
           onClick={undo}
         >
           Undo
@@ -45,6 +46,7 @@ const UIButtonWrapper: FC<{}> = () => {
           variant={ChakraUIButtonVariant.OUTLINE}
           colorScheme={ChakraUIButtonColorScheme.RED}
           fontSize="2vmin"
+          height="4.5vmin"
           onClick={reset}
         >
           Reset
@@ -54,6 +56,7 @@ const UIButtonWrapper: FC<{}> = () => {
           variant={ChakraUIButtonVariant.OUTLINE}
           colorScheme={ChakraUIButtonColorScheme.RED}
           fontSize="2vmin"
+          height="4.5vmin"
           onClick={handleOnClickChangeTheme}
         >
           Change Theme
