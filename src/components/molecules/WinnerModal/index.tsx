@@ -57,6 +57,7 @@ const WinnerModal: FC = () => {
             variant={ChakraUIButtonVariant.SOLID}
             colorScheme={chakraUiButtonColorScheme[winner]}
             fontSize="2vmin"
+            height="4.5vmin"
             onClick={undo}
           >
             Undo
@@ -66,6 +67,7 @@ const WinnerModal: FC = () => {
             variant={ChakraUIButtonVariant.SOLID}
             colorScheme={chakraUiButtonColorScheme[winner]}
             fontSize="2vmin"
+            height="4.5vmin"
             onClick={reset}
           >
             Reset
