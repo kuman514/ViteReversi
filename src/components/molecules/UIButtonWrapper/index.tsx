@@ -7,6 +7,14 @@ import {
   ChakraUIButtonColorScheme, ChakraUIButtonSize, ChakraUIButtonVariant, Theme,
 } from '^/types';
 
+const commonUIButtonStyleProps = {
+  buttonSize: ChakraUIButtonSize.SMALL,
+  variant: ChakraUIButtonVariant.OUTLINE,
+  colorScheme: ChakraUIButtonColorScheme.RED,
+  fontSize: '2vmin',
+  height: '4.5vmin',
+};
+
 const Root = styled.div`
 `;
 
@@ -32,31 +40,19 @@ const UIButtonWrapper: FC<{}> = () => {
     <Root>
       <Stack direction="row" spacing={4} align="center">
         <UIButton
-          buttonSize={ChakraUIButtonSize.SMALL}
-          variant={ChakraUIButtonVariant.OUTLINE}
-          colorScheme={ChakraUIButtonColorScheme.RED}
-          fontSize="2vmin"
-          height="4.5vmin"
+          {...commonUIButtonStyleProps}
           onClick={undo}
         >
           Undo
         </UIButton>
         <UIButton
-          buttonSize={ChakraUIButtonSize.SMALL}
-          variant={ChakraUIButtonVariant.OUTLINE}
-          colorScheme={ChakraUIButtonColorScheme.RED}
-          fontSize="2vmin"
-          height="4.5vmin"
+          {...commonUIButtonStyleProps}
           onClick={reset}
         >
           Reset
         </UIButton>
         <UIButton
-          buttonSize={ChakraUIButtonSize.SMALL}
-          variant={ChakraUIButtonVariant.OUTLINE}
-          colorScheme={ChakraUIButtonColorScheme.RED}
-          fontSize="2vmin"
-          height="4.5vmin"
+          {...commonUIButtonStyleProps}
           onClick={handleOnClickChangeTheme}
         >
           Change Theme
