@@ -25,7 +25,7 @@ const convertStringToBoard: (boardStr: string) => BoardState | undefined = (boar
           case '2':
             return Who.PLAYER_2;
           default:
-            throw Error('Who should be just one of EMPTY, PLAYER_1, or PLAYER_2.');
+            throw Error('The board tiles should be just one of 0 as EMPTY, 1 as PLAYER_1, or 2 as PLAYER_2.');
         }
       })());
     }
@@ -52,7 +52,7 @@ const convertStringToIsAvailable: (boardStr: string) => boolean[][] | undefined 
           case '1':
             return true;
           default:
-            throw Error('Who should be just one of EMPTY, PLAYER_1, or PLAYER_2.');
+            throw Error('The board tiles should be just one of 0 as UNAVAILABLE, 1 as AVAILABLE.');
         }
       })());
     }
