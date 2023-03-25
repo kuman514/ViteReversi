@@ -36,6 +36,20 @@ const UIButtonWrapper: FC<{}> = () => {
     }
   };
 
+  const handleOnClickSaveReplay: () => void = () => {
+    const { history } = useGameStore.getState();
+
+    const replayData = {
+      data: history,
+    };
+
+    const file: HTMLAnchorElement = document.createElement('a');
+    const fileBlob: Blob = new Blob([JSON.stringify(replayData)], { type: 'json' });
+    file.href = URL.createObjectURL(fileBlob);
+    file.download = 'vite-reversi_replay.json';
+    file.click();
+  };
+
   return (
     <Root>
       <Stack direction="row" spacing={4} align="center">
@@ -56,6 +70,12 @@ const UIButtonWrapper: FC<{}> = () => {
           onClick={handleOnClickChangeTheme}
         >
           Change Theme
+        </UIButton>
+        <UIButton
+          {...commonUIButtonStyleProps}
+          onClick={handleOnClickSaveReplay}
+        >
+          Save Replay
         </UIButton>
       </Stack>
     </Root>
