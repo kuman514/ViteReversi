@@ -1,10 +1,9 @@
 import React, { FC, ReactNode } from 'react';
 import styled from 'styled-components';
-import {
-  boardButtonColor, BORDER_MAX, BORDER_MIN, piece,
-} from '^/constants';
+import { boardButtonColor, piece } from '^/constants';
 import { useGameStore } from '^/store';
 import { Who } from '^/types';
+import { isInRange } from '^/utils';
 
 const availableIndicator: Record<Who, ReactNode> = {
   [Who.PLAYER_1]: '🔸',
@@ -37,7 +36,7 @@ const Root = styled.button`
 `;
 
 const BoardButton: FC<Props> = ({ row, col }) => {
-  if (row < BORDER_MIN || row > BORDER_MAX || col < BORDER_MIN || col > BORDER_MAX) {
+  if (!isInRange(row, col)) {
     throw Error('Out of border range');
   }
 
