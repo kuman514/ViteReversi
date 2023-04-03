@@ -9,6 +9,7 @@ import {
   GameState,
 } from '^/types';
 import { BORDER_MAX, BORDER_MIN, LENGTH } from '^/constants';
+import { isInRange } from '^/utils';
 
 const direction: BoardCoordinate[] = [
   { row: -1, col: 0 },
@@ -77,11 +78,7 @@ const useGameStore = create<GameStore>()((set) => ({
       boardState, isAvailable, currentTurn, history,
     } = gameStore;
 
-    if (
-      row < BORDER_MIN || row > BORDER_MAX
-      || col < BORDER_MIN || col > BORDER_MAX
-      || !isAvailable[row][col]
-    ) {
+    if (!isInRange(row, col) || !isAvailable[row][col]) {
       return gameStore;
     }
 
@@ -108,8 +105,7 @@ const useGameStore = create<GameStore>()((set) => ({
       };
 
       while (
-        BORDER_MIN <= curRow && curRow <= BORDER_MAX
-        && BORDER_MIN <= curCol && curCol <= BORDER_MAX
+        isInRange(curRow, curCol)
         && reparsedBoardStateCopy[curRow][curCol] === currentOpponent
       ) {
         curRow += rowDir;
@@ -117,8 +113,7 @@ const useGameStore = create<GameStore>()((set) => ({
       }
 
       if (
-        BORDER_MIN <= curRow && curRow <= BORDER_MAX
-        && BORDER_MIN <= curCol && curCol <= BORDER_MAX
+        isInRange(curRow, curCol)
         && reparsedBoardStateCopy[curRow][curCol] === currentTurn
       ) {
         curRow -= rowDir;
@@ -165,8 +160,7 @@ const useGameStore = create<GameStore>()((set) => ({
           let distance = 0;
 
           while (
-            BORDER_MIN <= curRow && curRow <= BORDER_MAX
-            && BORDER_MIN <= curCol && curCol <= BORDER_MAX
+            isInRange(curRow, curCol)
             && reparsedBoardStateCopy[curRow][curCol] === currentTurn
           ) {
             distance++;
@@ -175,8 +169,7 @@ const useGameStore = create<GameStore>()((set) => ({
           }
 
           return (
-            BORDER_MIN <= curRow && curRow <= BORDER_MAX
-            && BORDER_MIN <= curCol && curCol <= BORDER_MAX
+            isInRange(curRow, curCol)
             && reparsedBoardStateCopy[curRow][curCol] === nextPlayer
             && distance > 0
           );
