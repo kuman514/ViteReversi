@@ -178,16 +178,7 @@ const useGameStore = create<GameStore>()((set) => ({
     }
 
     // Check continuable and determine winner
-    const isContinuable: boolean = (() => {
-      for (let i = BORDER_MIN; i <= BORDER_MAX; i++) {
-        for (let j = BORDER_MIN; j <= BORDER_MAX; j++) {
-          if (newIsAvailableCopy[i][j]) {
-            return true;
-          }
-        }
-      }
-      return false;
-    })();
+    const isContinuable: boolean = newIsAvailableCopy.some((line) => line.some((btn) => btn));
     const newWinner: Who = isContinuable
       ? Who.EMPTY
       : (() => {
