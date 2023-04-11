@@ -1,3 +1,8 @@
+export enum Theme {
+  BRIGHT = 'bright',
+  DARK = 'dark',
+}
+
 export enum Who {
   EMPTY = 0,
   PLAYER_1 = 1,
@@ -21,35 +26,6 @@ export type History = {
   boardStateHistory: BoardStateHistory;
   isAvailableHistory: IsAvailableGistory;
 };
-
-export interface GameState {
-  boardState: BoardState;
-  currentTurn: Who;
-  isAvailable: boolean[][];
-  isContinuable: boolean;
-  pieceCount: PieceCount;
-  winner: Who;
-  history: History[];
-}
-export interface GameAction {
-  putPiece: ({ row, col }: { row: number; col: number; }) => void;
-  reset: () => void;
-  undo: () => void;
-}
-export type GameStore = GameState & GameAction;
-
-export enum Theme {
-  BRIGHT = 'bright',
-  DARK = 'dark',
-}
-
-export interface PreferenceState {
-  theme: Theme;
-}
-export interface PreferenceAction {
-  setTheme: (newTheme: Theme) => void;
-}
-export type PreferenceStore = PreferenceState & PreferenceAction;
 
 export enum ChakraUIButtonVariant {
   SOLID = 'solid',
@@ -85,3 +61,31 @@ export enum ChakraUIButtonSize {
   SMALL = 'sm',
   TINY = 'xs',
 }
+
+// Store types below =========================================================
+
+export interface GameState {
+  boardState: BoardState;
+  currentTurn: Who;
+  isAvailable: boolean[][];
+  isContinuable: boolean;
+  pieceCount: PieceCount;
+  winner: Who;
+  history: History[];
+}
+export interface GameAction {
+  putPiece: ({ row, col }: { row: number; col: number; }) => void;
+  reset: () => void;
+  undo: () => void;
+}
+export type GameStore = GameState & GameAction;
+
+export interface PreferenceState {
+  theme: Theme;
+}
+export interface PreferenceAction {
+  setTheme: (newTheme: Theme) => void;
+}
+export type PreferenceStore = PreferenceState & PreferenceAction;
+
+// Store types above =========================================================
