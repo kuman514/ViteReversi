@@ -88,4 +88,18 @@ export interface PreferenceAction {
 }
 export type PreferenceStore = PreferenceState & PreferenceAction;
 
+export interface ReplayState {
+  isReplaying: boolean;
+  replayPage: number;
+  replayLength: number;
+  replayHistory: History[];
+}
+export interface ReplayAction {
+  loadReplay: (replayHistory: History[]) => void;
+  prevPage: () => void;
+  nextPage: () => void;
+  clearReplay: () => void;
+}
+export type ReplayStore = ReplayState & ReplayAction;
+
 // Store types above =========================================================
