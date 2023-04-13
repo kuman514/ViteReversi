@@ -15,6 +15,7 @@ const useReplayStore = create<ReplayStore>()(
       ...resetReplayState(),
       loadReplay: (replayHistory) => set(() => ({
         ...resetReplayState(),
+        isReplaying: true,
         replayHistory,
         replayLength: replayHistory.length,
       })),
