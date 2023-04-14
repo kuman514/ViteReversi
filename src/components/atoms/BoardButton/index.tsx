@@ -1,7 +1,7 @@
 import React, { FC, ReactNode } from 'react';
 import styled from 'styled-components';
 import { boardButtonColor, piece } from '^/constants';
-import { useGameStore } from '^/store';
+import { useGameStore, useReplayStore } from '^/store';
 import { Who } from '^/types';
 import { isInRange } from '^/utils';
 
@@ -44,8 +44,12 @@ const BoardButton: FC<Props> = ({ row, col }) => {
     isAvailable, boardState, currentTurn, putPiece,
   } = useGameStore();
 
-  const isThisAvailable = isAvailable[row][col];
-  const currentPiece: Who = boardState[row][col];
+  const { isReplaying, replayHistory, replayPage } = useReplayStore();
+
+  const isThisAvailable = !isReplaying && isAvailable[row][col];
+  const currentPiece: Who = isReplaying
+    ? replayHistory[replayPage].boardStateHistory[row][col]
+    : boardState[row][col];
 
   const handleOnClick: () => void = () => {
     if (!isThisAvailable) {

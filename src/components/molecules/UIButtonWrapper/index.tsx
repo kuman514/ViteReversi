@@ -12,7 +12,7 @@ import {
   History,
   Who,
 } from '^/types';
-import { isInRange } from '^/utils';
+import { exportHistoryToReplay, isInRange } from '^/utils';
 
 const commonUIButtonStyleProps = {
   buttonSize: ChakraUIButtonSize.SMALL,
@@ -31,6 +31,13 @@ const UIButtonWrapper: FC<{}> = () => {
     reset,
     history: { length: historyLength },
   } = useGameStore();
+
+  const {
+    isReplaying,
+    prevPage,
+    nextPage,
+    clearReplay,
+  } = useReplayStore();
 
   const { theme, setTheme } = usePreferenceStore();
   const handleOnClickChangeTheme: () => void = () => {
@@ -104,16 +111,7 @@ const UIButtonWrapper: FC<{}> = () => {
 
   const handleOnClickSaveReplay: () => void = () => {
     const { history } = useGameStore.getState();
-
-    const replayData = {
-      data: history,
-    };
-
-    const file: HTMLAnchorElement = document.createElement('a');
-    const fileBlob: Blob = new Blob([JSON.stringify(replayData)], { type: 'json' });
-    file.href = URL.createObjectURL(fileBlob);
-    file.download = 'vite-reversi_replay.json';
-    file.click();
+    exportHistoryToReplay(history);
   };
 
   const saveLoadReplayButton: ReactNode = historyLength <= 1 ? (
@@ -132,29 +130,62 @@ const UIButtonWrapper: FC<{}> = () => {
     </UIButton>
   );
 
+  const gameUILayout: ReactNode = (
+    <Stack direction="row" spacing={4} align="center">
+      <UIButton
+        {...commonUIButtonStyleProps}
+        onClick={undo}
+      >
+        Undo
+      </UIButton>
+      <UIButton
+        {...commonUIButtonStyleProps}
+        onClick={reset}
+      >
+        Reset
+      </UIButton>
+      <UIButton
+        {...commonUIButtonStyleProps}
+        onClick={handleOnClickChangeTheme}
+      >
+        Change Theme
+      </UIButton>
+      {saveLoadReplayButton}
+    </Stack>
+  );
+
+  const replayUILayout: ReactNode = (
+    <Stack direction="row" spacing={4} align="center">
+      <UIButton
+        {...commonUIButtonStyleProps}
+        onClick={prevPage}
+      >
+        Prev
+      </UIButton>
+      <UIButton
+        {...commonUIButtonStyleProps}
+        onClick={nextPage}
+      >
+        Next
+      </UIButton>
+      <UIButton
+        {...commonUIButtonStyleProps}
+        onClick={handleOnClickChangeTheme}
+      >
+        Change Theme
+      </UIButton>
+      <UIButton
+        {...commonUIButtonStyleProps}
+        onClick={clearReplay}
+      >
+        Exit Replay
+      </UIButton>
+    </Stack>
+  );
+
   return (
     <Root>
-      <Stack direction="row" spacing={4} align="center">
-        <UIButton
-          {...commonUIButtonStyleProps}
-          onClick={undo}
-        >
-          Undo
-        </UIButton>
-        <UIButton
-          {...commonUIButtonStyleProps}
-          onClick={reset}
-        >
-          Reset
-        </UIButton>
-        <UIButton
-          {...commonUIButtonStyleProps}
-          onClick={handleOnClickChangeTheme}
-        >
-          Change Theme
-        </UIButton>
-        {saveLoadReplayButton}
-      </Stack>
+      {isReplaying ? replayUILayout : gameUILayout}
     </Root>
   );
 };

@@ -21,7 +21,7 @@ const useReplayStore = create<ReplayStore>()(
       })),
       prevPage: () => set((replayStore) => {
         const { isReplaying, replayPage } = replayStore;
-        if (!isReplaying || replayPage <= 1) {
+        if (!isReplaying || replayPage <= 0) {
           return {
             ...replayStore,
           };
@@ -35,13 +35,13 @@ const useReplayStore = create<ReplayStore>()(
       }),
       nextPage: () => set((replayStore) => {
         const { isReplaying, replayPage, replayLength } = replayStore;
-        if (!isReplaying || replayPage >= replayLength) {
+        const newReplayPage = replayPage + 1;
+        if (!isReplaying || newReplayPage >= replayLength) {
           return {
             ...replayStore,
           };
         }
 
-        const newReplayPage = replayPage + 1;
         return {
           ...replayStore,
           replayPage: newReplayPage,

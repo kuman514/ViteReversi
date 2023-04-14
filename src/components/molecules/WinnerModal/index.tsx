@@ -8,6 +8,7 @@ import { useGameStore } from '^/store';
 import {
   ChakraUIButtonColorScheme, ChakraUIButtonSize, ChakraUIButtonVariant, Who,
 } from '^/types';
+import { exportHistoryToReplay } from '^/utils';
 import PieceCountWrapper from '../PieceCountWrapper';
 
 const chakraUiButtonColorScheme: Record<Who, ChakraUIButtonColorScheme> = {
@@ -43,6 +44,11 @@ const WinnerModal: FC = () => {
     ? `Player ${winner} Wins!`
     : 'Draw!';
 
+  const handleOnClickSaveReplay: () => void = () => {
+    const { history } = useGameStore.getState();
+    exportHistoryToReplay(history);
+  };
+
   return !isContinuable ? (
     <ModalWrapper>
       <ModalBackground />
@@ -71,6 +77,16 @@ const WinnerModal: FC = () => {
             onClick={reset}
           >
             Reset
+          </UIButton>
+          <UIButton
+            buttonSize={ChakraUIButtonSize.SMALL}
+            variant={ChakraUIButtonVariant.SOLID}
+            colorScheme={chakraUiButtonColorScheme[winner]}
+            fontSize="2vmin"
+            height="4.5vmin"
+            onClick={handleOnClickSaveReplay}
+          >
+            Save Replay
           </UIButton>
         </ButtonWrapper>
       </ModalContentWrapper>
