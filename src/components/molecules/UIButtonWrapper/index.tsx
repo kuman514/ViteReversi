@@ -116,7 +116,7 @@ const UIButtonWrapper: FC<{}> = () => {
     file.click();
   };
 
-  const replayUI: ReactNode = historyLength <= 1 ? (
+  const saveLoadReplayButton: ReactNode = historyLength <= 1 ? (
     <UIButton
       {...commonUIButtonStyleProps}
       onClick={handleOnClickLoadReplay}
@@ -153,7 +153,7 @@ const UIButtonWrapper: FC<{}> = () => {
         >
           Change Theme
         </UIButton>
-        {replayUI}
+        {saveLoadReplayButton}
       </Stack>
     </Root>
   );
