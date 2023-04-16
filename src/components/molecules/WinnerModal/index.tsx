@@ -1,15 +1,16 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
+
 import ModalBackground from '^/components/atoms/ModalBackground';
 import ModalWrapper from '^/components/atoms/ModalWrapper';
 import UIButton from '^/components/atoms/UIButton';
 import WinnerModalTitle from '^/components/atoms/WinnerModalTitle';
+import PieceCountWrapper from '^/components/molecules/PieceCountWrapper';
 import { useGameStore } from '^/store';
 import {
   ChakraUIButtonColorScheme, ChakraUIButtonSize, ChakraUIButtonVariant, Who,
 } from '^/types';
 import { exportHistoryToReplay } from '^/utils';
-import PieceCountWrapper from '../PieceCountWrapper';
 
 const chakraUiButtonColorScheme: Record<Who, ChakraUIButtonColorScheme> = {
   [Who.PLAYER_1]: ChakraUIButtonColorScheme.ORANGE,
