@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
 import { piece, playerPallete } from '^/constants';
-import { useGameStore } from '^/store';
+import { useGameStore, useReplayStore } from '^/store';
 import { Who } from '^/types';
 
 interface RootProps {
@@ -23,7 +23,10 @@ const PieceCount: FC<Props> = ({ player, isForGame }) => {
   const { pieceCount, currentTurn } = useGameStore();
   const thisPieceCount = (player !== Who.EMPTY) ? String(pieceCount[player]).padStart(2, '0') : '';
   const turnColor: string = (!isForGame || currentTurn === player) ? playerPallete[player] : '';
-  return (
+
+  const { isReplaying } = useReplayStore();
+
+  return isReplaying ? null : (
     <Root turnColor={turnColor}>
       {piece[player]}
       {thisPieceCount}

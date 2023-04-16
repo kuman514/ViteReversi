@@ -2,7 +2,7 @@ import React, { FC, ReactNode } from 'react';
 import styled from 'styled-components';
 import { boardButtonColor, piece } from '^/constants';
 import { useGameStore, useReplayStore } from '^/store';
-import { Who } from '^/types';
+import { BoardCoordinate, Who } from '^/types';
 import { isInRange } from '^/utils';
 
 const availableIndicator: Record<Who, ReactNode> = {
@@ -11,15 +11,14 @@ const availableIndicator: Record<Who, ReactNode> = {
   [Who.EMPTY]: undefined,
 };
 
-interface Props {
-  row: number;
-  col: number;
+interface RootProps {
+  isRecentlyPut?: boolean;
 }
 
-const Root = styled.button`
+const Root = styled.button<RootProps>`
   all: unset;
 
-  background-color: ${boardButtonColor.NORMAL};
+  background-color: ${({ isRecentlyPut }) => (isRecentlyPut ? boardButtonColor.RECENTLY_PUT : boardButtonColor.NORMAL)};
 
   border-bottom: 1px solid var(--theme-font-color);
   border-right: 1px solid var(--theme-font-color);
@@ -31,9 +30,14 @@ const Root = styled.button`
   cursor: pointer;
 
   &:hover {
-    background-color: ${boardButtonColor.HOVER};
+    background-color: ${({ isRecentlyPut }) => (isRecentlyPut ? boardButtonColor.RECENTLY_PUT : boardButtonColor.HOVER)};
   }
 `;
+
+interface Props {
+  row: number;
+  col: number;
+}
 
 const BoardButton: FC<Props> = ({ row, col }) => {
   if (!isInRange(row, col)) {
@@ -41,7 +45,7 @@ const BoardButton: FC<Props> = ({ row, col }) => {
   }
 
   const {
-    isAvailable, boardState, currentTurn, putPiece,
+    isAvailable, boardState, currentTurn, history: gameHistory, putPiece,
   } = useGameStore();
 
   const { isReplaying, replayHistory, replayPage } = useReplayStore();
@@ -50,6 +54,18 @@ const BoardButton: FC<Props> = ({ row, col }) => {
   const currentPiece: Who = isReplaying
     ? replayHistory[replayPage].boardStateHistory[row][col]
     : boardState[row][col];
+
+  const gameCoordHistory: BoardCoordinate = gameHistory[gameHistory.length - 1]?.coordHistory ?? {
+    row: -1, col: -1,
+  };
+  const replayCoordHistory: BoardCoordinate = replayHistory[replayPage]?.coordHistory ?? {
+    row: -1, col: -1,
+  };
+  const isRecentlyPut: boolean = (
+    row === gameCoordHistory.row && col === gameCoordHistory.col
+  ) || (
+    row === replayCoordHistory.row && col === replayCoordHistory.col
+  );
 
   const handleOnClick: () => void = () => {
     if (!isThisAvailable) {
@@ -72,6 +88,7 @@ const BoardButton: FC<Props> = ({ row, col }) => {
     <Root
       disabled={!isThisAvailable}
       onClick={handleOnClick}
+      isRecentlyPut={isRecentlyPut}
     >
       {iconToBeRendered}
     </Root>

@@ -30,4 +30,5 @@ export const themeFontColor: Record<Theme, string> = {
 export const boardButtonColor: Record<string, string> = {
   NORMAL: '#55AF55',
   HOVER: '#D8245A',
+  RECENTLY_PUT: '#21FDFF',
 };
