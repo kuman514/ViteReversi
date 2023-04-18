@@ -12,7 +12,7 @@ import {
   History,
   Who,
 } from '^/types';
-import { exportHistoryToReplay, isInRange } from '^/utils';
+import { isInRange } from '^/utils';
 
 const commonUIButtonStyleProps = {
   buttonSize: ChakraUIButtonSize.SMALL,
@@ -109,11 +109,6 @@ const UIButtonWrapper: FC<{}> = () => {
     fileInput.click();
   };
 
-  const handleOnClickSaveReplay: () => void = () => {
-    const { history } = useGameStore.getState();
-    exportHistoryToReplay(history);
-  };
-
   const saveLoadReplayButton: ReactNode = historyLength <= 1 ? (
     <UIButton
       {...commonUIButtonStyleProps}
@@ -121,14 +116,7 @@ const UIButtonWrapper: FC<{}> = () => {
     >
       Load Replay
     </UIButton>
-  ) : (
-    <UIButton
-      {...commonUIButtonStyleProps}
-      onClick={handleOnClickSaveReplay}
-    >
-      Save Replay
-    </UIButton>
-  );
+  ) : null;
 
   const gameUILayout: ReactNode = (
     <Stack direction="row" spacing={4} align="center">
