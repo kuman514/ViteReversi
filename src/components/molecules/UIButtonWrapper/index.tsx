@@ -1,26 +1,11 @@
 import { Stack } from '@chakra-ui/react';
 import React, { FC, ReactNode } from 'react';
 import styled from 'styled-components';
-import UIButton from '^/components/atoms/UIButton';
+import BottomUIButton from '^/components/atoms/BottomUIButton';
 import { LENGTH } from '^/constants';
 import { useGameStore, usePreferenceStore, useReplayStore } from '^/store';
-import {
-  ChakraUIButtonColorScheme,
-  ChakraUIButtonSize,
-  ChakraUIButtonVariant,
-  Theme,
-  History,
-  Who,
-} from '^/types';
+import { Theme, History, Who } from '^/types';
 import { isInRange } from '^/utils';
-
-const commonUIButtonStyleProps = {
-  buttonSize: ChakraUIButtonSize.SMALL,
-  variant: ChakraUIButtonVariant.OUTLINE,
-  colorScheme: ChakraUIButtonColorScheme.RED,
-  fontSize: '2vmin',
-  height: '4.5vmin',
-};
 
 const Root = styled.div`
 `;
@@ -110,64 +95,40 @@ const UIButtonWrapper: FC<{}> = () => {
   };
 
   const saveLoadReplayButton: ReactNode = historyLength <= 1 ? (
-    <UIButton
-      {...commonUIButtonStyleProps}
-      onClick={handleOnClickLoadReplay}
-    >
+    <BottomUIButton onClick={handleOnClickLoadReplay}>
       Load Replay
-    </UIButton>
+    </BottomUIButton>
   ) : null;
 
   const gameUILayout: ReactNode = (
     <Stack direction="row" spacing={4} align="center">
-      <UIButton
-        {...commonUIButtonStyleProps}
-        onClick={undo}
-      >
+      <BottomUIButton onClick={undo}>
         Undo
-      </UIButton>
-      <UIButton
-        {...commonUIButtonStyleProps}
-        onClick={reset}
-      >
+      </BottomUIButton>
+      <BottomUIButton onClick={reset}>
         Reset
-      </UIButton>
-      <UIButton
-        {...commonUIButtonStyleProps}
-        onClick={handleOnClickChangeTheme}
-      >
+      </BottomUIButton>
+      <BottomUIButton onClick={handleOnClickChangeTheme}>
         Change Theme
-      </UIButton>
+      </BottomUIButton>
       {saveLoadReplayButton}
     </Stack>
   );
 
   const replayUILayout: ReactNode = (
     <Stack direction="row" spacing={4} align="center">
-      <UIButton
-        {...commonUIButtonStyleProps}
-        onClick={prevPage}
-      >
+      <BottomUIButton onClick={prevPage}>
         Prev
-      </UIButton>
-      <UIButton
-        {...commonUIButtonStyleProps}
-        onClick={nextPage}
-      >
+      </BottomUIButton>
+      <BottomUIButton onClick={nextPage}>
         Next
-      </UIButton>
-      <UIButton
-        {...commonUIButtonStyleProps}
-        onClick={handleOnClickChangeTheme}
-      >
+      </BottomUIButton>
+      <BottomUIButton onClick={handleOnClickChangeTheme}>
         Change Theme
-      </UIButton>
-      <UIButton
-        {...commonUIButtonStyleProps}
-        onClick={clearReplay}
-      >
+      </BottomUIButton>
+      <BottomUIButton onClick={clearReplay}>
         Exit Replay
-      </UIButton>
+      </BottomUIButton>
     </Stack>
   );
 
