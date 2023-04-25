@@ -25,6 +25,7 @@ export type History = {
   coordHistory: BoardCoordinate;
   boardStateHistory: BoardStateHistory;
   isAvailableHistory: IsAvailableGistory;
+  turnHistory: Who;
 };
 
 export enum ChakraUIButtonVariant {
