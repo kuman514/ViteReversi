@@ -61,6 +61,7 @@ const initialGameStore: GameState = {
     coordHistory: { row: -1, col: -1 },
     boardStateHistory: generateEmptyBoard(),
     isAvailableHistory: generateEmptyAvailable(),
+    turnHistory: Who.PLAYER_1,
   }],
   isContinuable: true,
 };
@@ -142,19 +143,18 @@ const useGameStore = create<GameStore>()((set) => ({
     }
 
     // Scan available for next player
-    const newIsAvailableCopy: boolean[][] = Array.from(
+    const newIsOpponentAvailableCopy: boolean[][] = Array.from(
       { length: LENGTH },
       () => Array.from({ length: LENGTH }, () => false),
     );
     reparsedBoardStateCopy[row][col] = currentTurn;
-    const nextPlayer: Who = currentOpponent;
     for (let r = BORDER_MIN; r <= BORDER_MAX; r++) {
       for (let c = BORDER_MIN; c <= BORDER_MAX; c++) {
         if (reparsedBoardStateCopy[r][c] !== Who.EMPTY) {
           continue;
         }
 
-        newIsAvailableCopy[r][c] = direction.map(({ row: rowDir, col: colDir }) => {
+        newIsOpponentAvailableCopy[r][c] = direction.map(({ row: rowDir, col: colDir }) => {
           let curRow: number = r + rowDir;
           let curCol: number = c + colDir;
           let distance = 0;
@@ -170,15 +170,63 @@ const useGameStore = create<GameStore>()((set) => ({
 
           return (
             isInRange(curRow, curCol)
-            && reparsedBoardStateCopy[curRow][curCol] === nextPlayer
+            && reparsedBoardStateCopy[curRow][curCol] === currentOpponent
             && distance > 0
           );
         }).some((isPossible) => isPossible);
       }
     }
 
+    // Check opponent continuable
+    const isOpponentContinuable: boolean = newIsOpponentAvailableCopy.some(
+      (line) => line.some((btn) => btn),
+    );
+    // Scan available for current player if not possible for the opponent
+    const newIsAvailableCopy: boolean[][] = isOpponentContinuable
+      ? newIsOpponentAvailableCopy
+      : (() => {
+        const newIsCurrentAvailableCopy: boolean[][] = Array.from(
+          { length: LENGTH },
+          () => Array.from({ length: LENGTH }, () => false),
+        );
+        for (let r = BORDER_MIN; r <= BORDER_MAX; r++) {
+          for (let c = BORDER_MIN; c <= BORDER_MAX; c++) {
+            if (reparsedBoardStateCopy[r][c] !== Who.EMPTY) {
+              continue;
+            }
+
+            newIsCurrentAvailableCopy[r][c] = direction.map(({ row: rowDir, col: colDir }) => {
+              let curRow: number = r + rowDir;
+              let curCol: number = c + colDir;
+              let distance = 0;
+
+              while (
+                isInRange(curRow, curCol)
+                && reparsedBoardStateCopy[curRow][curCol] === currentOpponent
+              ) {
+                distance++;
+                curRow += rowDir;
+                curCol += colDir;
+              }
+
+              return (
+                isInRange(curRow, curCol)
+                && reparsedBoardStateCopy[curRow][curCol] === currentTurn
+                && distance > 0
+              );
+            }).some((isPossible) => isPossible);
+          }
+        }
+        return newIsCurrentAvailableCopy;
+      })();
+
+    const nextPlayer: Who = isOpponentContinuable ? currentOpponent : currentTurn;
     // Check continuable and determine winner
-    const isContinuable: boolean = newIsAvailableCopy.some((line) => line.some((btn) => btn));
+    const isContinuable: boolean = isOpponentContinuable === true
+      ? isOpponentContinuable
+      : newIsAvailableCopy.some(
+        (line) => line.some((btn) => btn),
+      );
     const newWinner: Who = isContinuable
       ? Who.EMPTY
       : (() => {
@@ -196,6 +244,7 @@ const useGameStore = create<GameStore>()((set) => ({
       coordHistory: { row, col },
       boardStateHistory: reparsedBoardStateCopy,
       isAvailableHistory: newIsAvailableCopy,
+      turnHistory: nextPlayer,
     });
 
     return {
@@ -211,9 +260,7 @@ const useGameStore = create<GameStore>()((set) => ({
   }),
   reset: () => set(() => returnCopiedInitialGameStore()),
   undo: () => set((gameStore) => {
-    const {
-      currentTurn, history,
-    } = gameStore;
+    const { history } = gameStore;
 
     if (history.length <= 1) {
       return gameStore;
@@ -222,16 +269,7 @@ const useGameStore = create<GameStore>()((set) => ({
     const newHistory: History[] = Array.from(history);
     newHistory.pop();
 
-    const nextPlayer: Who = (() => {
-      switch (currentTurn) {
-        case Who.PLAYER_1:
-          return Who.PLAYER_2;
-        case Who.PLAYER_2:
-          return Who.PLAYER_1;
-        default:
-          throw Error('There should be exactly 2 players.');
-      }
-    })();
+    const nextPlayer: Who = newHistory[newHistory.length - 1].turnHistory;
 
     const pieceCount: PieceCount = {
       [Who.PLAYER_1]: 0,
