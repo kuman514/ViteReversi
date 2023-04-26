@@ -72,6 +72,47 @@ const returnCopiedInitialGameStore: () => GameState = () => {
   return reparsed;
 };
 
+const getIsAvailable: ({
+  board, curPlayer, nextPlayer,
+}: {
+  board: BoardState;
+  curPlayer: Who;
+  nextPlayer: Who;
+}) => boolean[][] = ({
+  board, curPlayer, nextPlayer,
+}) => {
+  const newIsCurrentAvailableCopy: boolean[][] = Array.from(
+    { length: LENGTH },
+    () => Array.from({ length: LENGTH }, () => false),
+  );
+  for (let r = BORDER_MIN; r <= BORDER_MAX; r++) {
+    for (let c = BORDER_MIN; c <= BORDER_MAX; c++) {
+      if (board[r][c] !== Who.EMPTY) {
+        continue;
+      }
+
+      newIsCurrentAvailableCopy[r][c] = direction.map(({ row: rowDir, col: colDir }) => {
+        let curRow: number = r + rowDir;
+        let curCol: number = c + colDir;
+        let distance = 0;
+
+        while (isInRange(curRow, curCol) && board[curRow][curCol] === curPlayer) {
+          distance++;
+          curRow += rowDir;
+          curCol += colDir;
+        }
+
+        return (
+          isInRange(curRow, curCol)
+          && board[curRow][curCol] === nextPlayer
+          && distance > 0
+        );
+      }).some((isPossible) => isPossible);
+    }
+  }
+  return newIsCurrentAvailableCopy;
+};
+
 const useGameStore = create<GameStore>()((set) => ({
   ...returnCopiedInitialGameStore(),
   putPiece: ({ row, col }) => set((gameStore) => {
@@ -143,39 +184,12 @@ const useGameStore = create<GameStore>()((set) => ({
     }
 
     // Scan available for next player
-    const newIsOpponentAvailableCopy: boolean[][] = Array.from(
-      { length: LENGTH },
-      () => Array.from({ length: LENGTH }, () => false),
-    );
     reparsedBoardStateCopy[row][col] = currentTurn;
-    for (let r = BORDER_MIN; r <= BORDER_MAX; r++) {
-      for (let c = BORDER_MIN; c <= BORDER_MAX; c++) {
-        if (reparsedBoardStateCopy[r][c] !== Who.EMPTY) {
-          continue;
-        }
-
-        newIsOpponentAvailableCopy[r][c] = direction.map(({ row: rowDir, col: colDir }) => {
-          let curRow: number = r + rowDir;
-          let curCol: number = c + colDir;
-          let distance = 0;
-
-          while (
-            isInRange(curRow, curCol)
-            && reparsedBoardStateCopy[curRow][curCol] === currentTurn
-          ) {
-            distance++;
-            curRow += rowDir;
-            curCol += colDir;
-          }
-
-          return (
-            isInRange(curRow, curCol)
-            && reparsedBoardStateCopy[curRow][curCol] === currentOpponent
-            && distance > 0
-          );
-        }).some((isPossible) => isPossible);
-      }
-    }
+    const newIsOpponentAvailableCopy: boolean[][] = getIsAvailable({
+      board: reparsedBoardStateCopy,
+      curPlayer: currentTurn,
+      nextPlayer: currentOpponent,
+    });
 
     // Check opponent continuable
     const isOpponentContinuable: boolean = newIsOpponentAvailableCopy.some(
@@ -184,41 +198,11 @@ const useGameStore = create<GameStore>()((set) => ({
     // Scan available for current player if not possible for the opponent
     const newIsAvailableCopy: boolean[][] = isOpponentContinuable
       ? newIsOpponentAvailableCopy
-      : (() => {
-        const newIsCurrentAvailableCopy: boolean[][] = Array.from(
-          { length: LENGTH },
-          () => Array.from({ length: LENGTH }, () => false),
-        );
-        for (let r = BORDER_MIN; r <= BORDER_MAX; r++) {
-          for (let c = BORDER_MIN; c <= BORDER_MAX; c++) {
-            if (reparsedBoardStateCopy[r][c] !== Who.EMPTY) {
-              continue;
-            }
-
-            newIsCurrentAvailableCopy[r][c] = direction.map(({ row: rowDir, col: colDir }) => {
-              let curRow: number = r + rowDir;
-              let curCol: number = c + colDir;
-              let distance = 0;
-
-              while (
-                isInRange(curRow, curCol)
-                && reparsedBoardStateCopy[curRow][curCol] === currentOpponent
-              ) {
-                distance++;
-                curRow += rowDir;
-                curCol += colDir;
-              }
-
-              return (
-                isInRange(curRow, curCol)
-                && reparsedBoardStateCopy[curRow][curCol] === currentTurn
-                && distance > 0
-              );
-            }).some((isPossible) => isPossible);
-          }
-        }
-        return newIsCurrentAvailableCopy;
-      })();
+      : getIsAvailable({
+        board: reparsedBoardStateCopy,
+        curPlayer: currentOpponent,
+        nextPlayer: currentTurn,
+      });
 
     const nextPlayer: Who = isOpponentContinuable ? currentOpponent : currentTurn;
     // Check continuable and determine winner
