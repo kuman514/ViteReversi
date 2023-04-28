@@ -61,10 +61,10 @@ const BoardButton: FC<Props> = ({ row, col }) => {
   const replayCoordHistory: BoardCoordinate = replayHistory[replayPage]?.coordHistory ?? {
     row: -1, col: -1,
   };
-  const isRecentlyPut: boolean = (
-    row === gameCoordHistory.row && col === gameCoordHistory.col
-  ) || (
+  const isRecentlyPut: boolean = isReplaying ? (
     row === replayCoordHistory.row && col === replayCoordHistory.col
+  ) : (
+    row === gameCoordHistory.row && col === gameCoordHistory.col
   );
 
   const handleOnClick: () => void = () => {
