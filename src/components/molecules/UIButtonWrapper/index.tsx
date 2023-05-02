@@ -1,5 +1,5 @@
 import { Stack } from '@chakra-ui/react';
-import React, { FC, ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 import styled from 'styled-components';
 import BottomUIButton from '^/components/atoms/BottomUIButton';
 import { LENGTH } from '^/constants';
@@ -10,7 +10,7 @@ import { isInRange } from '^/utils';
 const Root = styled.div`
 `;
 
-const UIButtonWrapper: FC<{}> = () => {
+function UIButtonWrapper() {
   const {
     undo,
     reset,
@@ -137,6 +137,6 @@ const UIButtonWrapper: FC<{}> = () => {
       {isReplaying ? replayUILayout : gameUILayout}
     </Root>
   );
-};
+}
 
 export default UIButtonWrapper;

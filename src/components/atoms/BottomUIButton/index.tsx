@@ -1,4 +1,4 @@
-import React, { FC, ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 import UIButton from '^/components/atoms/UIButton';
 import {
   ChakraUIButtonColorScheme,
@@ -19,13 +19,15 @@ interface Props {
   children?: ReactNode;
 }
 
-const BottomUIButton: FC<Props> = ({ onClick, children }) => (
-  <UIButton
-    {...commonBottomUIButtonStyleProps}
-    onClick={onClick}
-  >
-    {children}
-  </UIButton>
-);
+function BottomUIButton({ onClick, children }: Props) {
+  return (
+    <UIButton
+      {...commonBottomUIButtonStyleProps}
+      onClick={onClick}
+    >
+      {children}
+    </UIButton>
+  );
+}
 
 export default BottomUIButton;

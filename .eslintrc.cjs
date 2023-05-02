@@ -91,7 +91,10 @@ module.exports = {
         ],
         'func-style': [
           'error',
-          'expression',
+          'declaration',
+          {
+            allowArrowFunctions: true,
+          }
         ],
         'func-names': [
           'error',

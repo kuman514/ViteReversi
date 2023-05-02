@@ -22,7 +22,7 @@ const direction: BoardCoordinate[] = [
   { row: -1, col: -1 },
 ];
 
-const generateEmptyBoard: () => BoardState = () => {
+function generateEmptyBoard(): BoardState {
   const emptyBoard: BoardState = Array.from(
     { length: LENGTH },
     () => Array.from({ length: LENGTH }, () => Who.EMPTY),
@@ -33,9 +33,9 @@ const generateEmptyBoard: () => BoardState = () => {
   emptyBoard[center + 1][center] = Who.PLAYER_2;
   emptyBoard[center + 1][center + 1] = Who.PLAYER_1;
   return emptyBoard;
-};
+}
 
-const generateEmptyAvailable: () => boolean[][] = () => {
+function generateEmptyAvailable(): boolean[][] {
   const emptyBoard: boolean[][] = Array.from(
     { length: LENGTH },
     () => Array.from({ length: LENGTH }, () => false),
@@ -46,7 +46,7 @@ const generateEmptyAvailable: () => boolean[][] = () => {
   emptyBoard[center + 2][center] = true;
   emptyBoard[center + 1][center - 1] = true;
   return emptyBoard;
-};
+}
 
 const initialGameStore: GameState = {
   boardState: generateEmptyBoard(),
@@ -66,21 +66,19 @@ const initialGameStore: GameState = {
   isContinuable: true,
 };
 
-const returnCopiedInitialGameStore: () => GameState = () => {
+function returnCopiedInitialGameStore(): GameState {
   const deepCopied: string = JSON.stringify(initialGameStore);
   const reparsed: GameState = JSON.parse(deepCopied);
   return reparsed;
-};
+}
 
-const getIsAvailable: ({
+function getIsAvailable({
   board, curPlayer, nextPlayer,
 }: {
   board: BoardState;
   curPlayer: Who;
   nextPlayer: Who;
-}) => boolean[][] = ({
-  board, curPlayer, nextPlayer,
-}) => {
+}): boolean[][] {
   const newIsCurrentAvailableCopy: boolean[][] = Array.from(
     { length: LENGTH },
     () => Array.from({ length: LENGTH }, () => false),
@@ -111,7 +109,7 @@ const getIsAvailable: ({
     }
   }
   return newIsCurrentAvailableCopy;
-};
+}
 
 const useGameStore = create<GameStore>()((set) => ({
   ...returnCopiedInitialGameStore(),

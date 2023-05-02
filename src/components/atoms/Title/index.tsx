@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import Text from './text';
 
@@ -8,10 +8,12 @@ const Root = styled.h1`
   color: var(--theme-font-color);
 `;
 
-const Title: FC<{}> = () => (
-  <Root>
-    {Text.title}
-  </Root>
-);
+function Title() {
+  return (
+    <Root>
+      {Text.title}
+    </Root>
+  );
+}
 
 export default Title;

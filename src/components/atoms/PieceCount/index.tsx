@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { piece, playerPallete } from '^/constants';
 import { useGameStore, useReplayStore } from '^/store';
@@ -19,7 +19,7 @@ interface Props {
   isForGame?: boolean;
 }
 
-const PieceCount: FC<Props> = ({ player, isForGame }) => {
+function PieceCount({ player, isForGame }: Props) {
   const { pieceCount, currentTurn } = useGameStore();
   const thisPieceCount = (player !== Who.EMPTY) ? String(pieceCount[player]).padStart(2, '0') : '';
   const turnColor: string = (!isForGame || currentTurn === player) ? playerPallete[player] : '';
@@ -32,6 +32,6 @@ const PieceCount: FC<Props> = ({ player, isForGame }) => {
       {thisPieceCount}
     </Root>
   );
-};
+}
 
 export default PieceCount;

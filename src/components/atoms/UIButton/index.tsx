@@ -1,5 +1,5 @@
 import { Button } from '@chakra-ui/react';
-import React, { FC, ReactElement, ReactNode } from 'react';
+import React, { ReactElement, ReactNode } from 'react';
 import styled from 'styled-components';
 import { ChakraUIButtonColorScheme, ChakraUIButtonSize, ChakraUIButtonVariant } from '^/types';
 
@@ -23,32 +23,27 @@ interface Props {
   onClick?: () => void;
 }
 
-const UIButton: FC<Props> = ({
-  children,
-  variant,
-  colorScheme,
-  buttonSize,
-  leftIcon,
-  rightIcon,
-  fontSize,
-  height,
-  onClick,
-}) => (
-  <Button
-    {...{
-      variant,
-      colorScheme,
-      buttonSize,
-      leftIcon,
-      rightIcon,
-      onClick,
-      height,
-    }}
-  >
-    <ButtonFontWrapper fontSize={fontSize}>
-      {children}
-    </ButtonFontWrapper>
-  </Button>
-);
+function UIButton({
+  children, variant, colorScheme, buttonSize,
+  leftIcon, rightIcon, fontSize, height, onClick,
+}: Props) {
+  return (
+    <Button
+      {...{
+        variant,
+        colorScheme,
+        buttonSize,
+        leftIcon,
+        rightIcon,
+        onClick,
+        height,
+      }}
+    >
+      <ButtonFontWrapper fontSize={fontSize}>
+        {children}
+      </ButtonFontWrapper>
+    </Button>
+  );
+}
 
 export default UIButton;

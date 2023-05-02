@@ -5,7 +5,7 @@ import { BORDER_MAX, BORDER_MIN, LENGTH } from '^/constants';
 import { BoardState, Who } from '^/types';
 import useGameStore from './game';
 
-const convertStringToBoard: (boardStr: string) => BoardState | undefined = (boardStr) => {
+function convertStringToBoard(boardStr: string): BoardState | undefined {
   const board = boardStr.trim().split('\n').map((row) => row.trim().split(''));
 
   if (board.length !== LENGTH || board.some((row) => row.length !== LENGTH)) {
@@ -32,9 +32,9 @@ const convertStringToBoard: (boardStr: string) => BoardState | undefined = (boar
   }
 
   return result;
-};
+}
 
-const convertStringToIsAvailable: (boardStr: string) => boolean[][] | undefined = (boardStr) => {
+function convertStringToIsAvailable(boardStr: string): boolean[][] | undefined {
   const board = boardStr.trim().split('\n').map((row) => row.trim().split(''));
 
   if (board.length !== LENGTH || board.some((row) => row.length !== LENGTH)) {
@@ -59,7 +59,7 @@ const convertStringToIsAvailable: (boardStr: string) => boolean[][] | undefined 
   }
 
   return result;
-};
+}
 
 describe('convertStringToBoard and convertStringToIsAvailable', () => {
   it('should not throw in appropriate length', async () => {
