@@ -1,4 +1,4 @@
-import React, { FC, ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 import styled from 'styled-components';
 
 const Root = styled.div`
@@ -17,12 +17,12 @@ interface Props {
   children: ReactNode;
 }
 
-const ModalWrapper: FC<Props> = ({
-  children,
-}) => (
-  <Root>
-    { children }
-  </Root>
-);
+function ModalWrapper({ children }: Props) {
+  return (
+    <Root>
+      { children }
+    </Root>
+  );
+}
 
 export default ModalWrapper;

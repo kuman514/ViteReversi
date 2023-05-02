@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
 import ModalBackground from '^/components/atoms/ModalBackground';
@@ -37,7 +37,7 @@ const ButtonWrapper = styled.div`
   column-gap: 2vmin;
 `;
 
-const WinnerModal: FC = () => {
+function WinnerModal() {
   const {
     winner, isContinuable, undo, reset,
   } = useGameStore();
@@ -93,6 +93,6 @@ const WinnerModal: FC = () => {
       </ModalContentWrapper>
     </ModalWrapper>
   ) : null;
-};
+}
 
 export default WinnerModal;

@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import Title from '^/components/atoms/Title';
 import WinnerModal from '^/components/molecules/WinnerModal';
@@ -15,13 +15,15 @@ const Root = styled.div`
   align-items: center;
 `;
 
-const Game: FC<{}> = () => (
-  <Root>
-    <Title />
-    <Board />
-    <BottomUIWrapper />
-    <WinnerModal />
-  </Root>
-);
+function Game() {
+  return (
+    <Root>
+      <Title />
+      <Board />
+      <BottomUIWrapper />
+      <WinnerModal />
+    </Root>
+  );
+}
 
 export default Game;
