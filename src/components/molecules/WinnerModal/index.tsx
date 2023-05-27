@@ -18,6 +18,13 @@ const chakraUiButtonColorScheme: Record<Who, ChakraUIButtonColorScheme> = {
   [Who.EMPTY]: ChakraUIButtonColorScheme.TEAL,
 };
 
+const commonWinnerModalUIButtonStyleProps = {
+  buttonSize: ChakraUIButtonSize.SMALL,
+  variant: ChakraUIButtonVariant.SOLID,
+  fontSize: '2vmin',
+  height: '4.5vmin',
+};
+
 const ModalContentWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -60,31 +67,22 @@ function WinnerModal() {
         </ModalPieceCountWrapper>
         <ButtonWrapper>
           <UIButton
-            buttonSize={ChakraUIButtonSize.SMALL}
-            variant={ChakraUIButtonVariant.SOLID}
+            {...commonWinnerModalUIButtonStyleProps}
             colorScheme={chakraUiButtonColorScheme[winner]}
-            fontSize="2vmin"
-            height="4.5vmin"
             onClick={undo}
           >
             Undo
           </UIButton>
           <UIButton
-            buttonSize={ChakraUIButtonSize.SMALL}
-            variant={ChakraUIButtonVariant.SOLID}
+            {...commonWinnerModalUIButtonStyleProps}
             colorScheme={chakraUiButtonColorScheme[winner]}
-            fontSize="2vmin"
-            height="4.5vmin"
             onClick={reset}
           >
             Reset
           </UIButton>
           <UIButton
-            buttonSize={ChakraUIButtonSize.SMALL}
-            variant={ChakraUIButtonVariant.SOLID}
+            {...commonWinnerModalUIButtonStyleProps}
             colorScheme={chakraUiButtonColorScheme[winner]}
-            fontSize="2vmin"
-            height="4.5vmin"
             onClick={handleOnClickSaveReplay}
           >
             Save Replay
