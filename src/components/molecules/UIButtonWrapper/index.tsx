@@ -7,8 +7,7 @@ import { useGameStore, usePreferenceStore, useReplayStore } from '^/store';
 import { Theme, History, Who } from '^/types';
 import { isInRange } from '^/utils';
 
-const Root = styled.div`
-`;
+const Root = styled.div``;
 
 function UIButtonWrapper() {
   const {

@@ -3,26 +3,18 @@ import styled from 'styled-components';
 
 import ModalBackground from '^/components/atoms/ModalBackground';
 import ModalWrapper from '^/components/atoms/ModalWrapper';
-import UIButton from '^/components/atoms/UIButton';
 import WinnerModalTitle from '^/components/atoms/WinnerModalTitle';
+import WinnerModalUIButton from '^/components/atoms/WinnerModalUIButton';
 import PieceCountWrapper from '^/components/molecules/PieceCountWrapper';
+
 import { useGameStore } from '^/store';
-import {
-  ChakraUIButtonColorScheme, ChakraUIButtonSize, ChakraUIButtonVariant, Who,
-} from '^/types';
+import { ChakraUIButtonColorScheme, Who } from '^/types';
 import { exportHistoryToReplay } from '^/utils';
 
 const chakraUiButtonColorScheme: Record<Who, ChakraUIButtonColorScheme> = {
   [Who.PLAYER_1]: ChakraUIButtonColorScheme.ORANGE,
   [Who.PLAYER_2]: ChakraUIButtonColorScheme.BLUE,
   [Who.EMPTY]: ChakraUIButtonColorScheme.TEAL,
-};
-
-const commonWinnerModalUIButtonStyleProps = {
-  buttonSize: ChakraUIButtonSize.SMALL,
-  variant: ChakraUIButtonVariant.SOLID,
-  fontSize: '2vmin',
-  height: '4.5vmin',
 };
 
 const ModalContentWrapper = styled.div`
@@ -66,27 +58,24 @@ function WinnerModal() {
           <PieceCountWrapper />
         </ModalPieceCountWrapper>
         <ButtonWrapper>
-          <UIButton
-            {...commonWinnerModalUIButtonStyleProps}
+          <WinnerModalUIButton
             colorScheme={chakraUiButtonColorScheme[winner]}
             onClick={undo}
           >
             Undo
-          </UIButton>
-          <UIButton
-            {...commonWinnerModalUIButtonStyleProps}
+          </WinnerModalUIButton>
+          <WinnerModalUIButton
             colorScheme={chakraUiButtonColorScheme[winner]}
             onClick={reset}
           >
             Reset
-          </UIButton>
-          <UIButton
-            {...commonWinnerModalUIButtonStyleProps}
+          </WinnerModalUIButton>
+          <WinnerModalUIButton
             colorScheme={chakraUiButtonColorScheme[winner]}
             onClick={handleOnClickSaveReplay}
           >
             Save Replay
-          </UIButton>
+          </WinnerModalUIButton>
         </ButtonWrapper>
       </ModalContentWrapper>
     </ModalWrapper>
