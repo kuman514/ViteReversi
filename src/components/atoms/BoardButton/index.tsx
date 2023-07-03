@@ -1,4 +1,4 @@
-import React, { FC, ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 import styled from 'styled-components';
 import { boardButtonColor, piece } from '^/constants';
 import { useGameStore, useReplayStore } from '^/store';
@@ -39,7 +39,7 @@ interface Props {
   col: number;
 }
 
-const BoardButton: FC<Props> = ({ row, col }) => {
+function BoardButton({ row, col }: Props) {
   if (!isInRange(row, col)) {
     throw Error('Out of border range');
   }
@@ -93,6 +93,6 @@ const BoardButton: FC<Props> = ({ row, col }) => {
       {iconToBeRendered}
     </Root>
   );
-};
+}
 
 export default BoardButton;

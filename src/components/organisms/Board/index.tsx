@@ -1,4 +1,4 @@
-import React, { FC, ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 import styled from 'styled-components';
 import BoardRow from '^/components/molecules/BoardRow';
 import { BORDER_MAX, BORDER_MIN } from '^/constants';
@@ -14,7 +14,7 @@ const Root = styled.div`
   grid-template-rows: repeat(8, 1fr);
 `;
 
-const Board: FC<{}> = () => {
+function Board() {
   const rows: ReactNode[] = [];
   for (let row = BORDER_MIN; row <= BORDER_MAX; row++) {
     rows.push(
@@ -30,6 +30,6 @@ const Board: FC<{}> = () => {
       {rows}
     </Root>
   );
-};
+}
 
 export default Board;

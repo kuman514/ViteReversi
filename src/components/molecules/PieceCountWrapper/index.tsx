@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import PieceCount from '^/components/atoms/PieceCount';
 import { themeFontColor } from '^/constants';
@@ -25,11 +25,13 @@ interface Props {
   isForGame?: boolean;
 }
 
-const PieceCountWrapper: FC<Props> = ({ isForGame }) => (
-  <Root fontColor={isForGame ? undefined : themeFontColor[Theme.DARK]}>
-    <PieceCount player={Who.PLAYER_1} isForGame={isForGame} />
-    <PieceCount player={Who.PLAYER_2} isForGame={isForGame} />
-  </Root>
-);
+function PieceCountWrapper({ isForGame }: Props) {
+  return (
+    <Root fontColor={isForGame ? undefined : themeFontColor[Theme.DARK]}>
+      <PieceCount player={Who.PLAYER_1} isForGame={isForGame} />
+      <PieceCount player={Who.PLAYER_2} isForGame={isForGame} />
+    </Root>
+  );
+}
 
 export default PieceCountWrapper;

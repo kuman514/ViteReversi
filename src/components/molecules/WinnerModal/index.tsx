@@ -1,15 +1,14 @@
-import React, { FC } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
 import ModalBackground from '^/components/atoms/ModalBackground';
 import ModalWrapper from '^/components/atoms/ModalWrapper';
-import UIButton from '^/components/atoms/UIButton';
 import WinnerModalTitle from '^/components/atoms/WinnerModalTitle';
+import WinnerModalUIButton from '^/components/atoms/WinnerModalUIButton';
 import PieceCountWrapper from '^/components/molecules/PieceCountWrapper';
+
 import { useGameStore } from '^/store';
-import {
-  ChakraUIButtonColorScheme, ChakraUIButtonSize, ChakraUIButtonVariant, Who,
-} from '^/types';
+import { ChakraUIButtonColorScheme, Who } from '^/types';
 import { exportHistoryToReplay } from '^/utils';
 
 const chakraUiButtonColorScheme: Record<Who, ChakraUIButtonColorScheme> = {
@@ -37,7 +36,7 @@ const ButtonWrapper = styled.div`
   column-gap: 2vmin;
 `;
 
-const WinnerModal: FC = () => {
+function WinnerModal() {
   const {
     winner, isContinuable, undo, reset,
   } = useGameStore();
@@ -59,40 +58,28 @@ const WinnerModal: FC = () => {
           <PieceCountWrapper />
         </ModalPieceCountWrapper>
         <ButtonWrapper>
-          <UIButton
-            buttonSize={ChakraUIButtonSize.SMALL}
-            variant={ChakraUIButtonVariant.SOLID}
+          <WinnerModalUIButton
             colorScheme={chakraUiButtonColorScheme[winner]}
-            fontSize="2vmin"
-            height="4.5vmin"
             onClick={undo}
           >
             Undo
-          </UIButton>
-          <UIButton
-            buttonSize={ChakraUIButtonSize.SMALL}
-            variant={ChakraUIButtonVariant.SOLID}
+          </WinnerModalUIButton>
+          <WinnerModalUIButton
             colorScheme={chakraUiButtonColorScheme[winner]}
-            fontSize="2vmin"
-            height="4.5vmin"
             onClick={reset}
           >
             Reset
-          </UIButton>
-          <UIButton
-            buttonSize={ChakraUIButtonSize.SMALL}
-            variant={ChakraUIButtonVariant.SOLID}
+          </WinnerModalUIButton>
+          <WinnerModalUIButton
             colorScheme={chakraUiButtonColorScheme[winner]}
-            fontSize="2vmin"
-            height="4.5vmin"
             onClick={handleOnClickSaveReplay}
           >
             Save Replay
-          </UIButton>
+          </WinnerModalUIButton>
         </ButtonWrapper>
       </ModalContentWrapper>
     </ModalWrapper>
   ) : null;
-};
+}
 
 export default WinnerModal;

@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { playerPallete } from '^/constants';
 import { Who } from '^/types';
@@ -39,9 +39,7 @@ interface Props {
   winner?: Who;
 }
 
-const WinnerModalTitle: FC<Props> = ({
-  title, winner,
-}) => {
+function WinnerModalTitle({ title, winner }: Props) {
   if (winner === undefined) {
     return null;
   }
@@ -56,6 +54,6 @@ const WinnerModalTitle: FC<Props> = ({
       </span>
     </Root>
   );
-};
+}
 
 export default WinnerModalTitle;

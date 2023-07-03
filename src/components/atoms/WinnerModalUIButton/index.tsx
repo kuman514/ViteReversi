@@ -6,10 +6,9 @@ import {
   ChakraUIButtonVariant,
 } from '^/types';
 
-const commonBottomUIButtonStyleProps = {
+const commonWinnerModalUIButtonStyleProps = {
   buttonSize: ChakraUIButtonSize.SMALL,
-  variant: ChakraUIButtonVariant.OUTLINE,
-  colorScheme: ChakraUIButtonColorScheme.RED,
+  variant: ChakraUIButtonVariant.SOLID,
   fontSize: '2vmin',
   height: '4.5vmin',
 };
@@ -17,12 +16,14 @@ const commonBottomUIButtonStyleProps = {
 interface Props {
   onClick?: () => void;
   children?: ReactNode;
+  colorScheme: ChakraUIButtonColorScheme;
 }
 
-function BottomUIButton({ onClick, children }: Props) {
+function WinnerModalUIButton({ onClick, children, colorScheme }: Props) {
   return (
     <UIButton
-      {...commonBottomUIButtonStyleProps}
+      {...commonWinnerModalUIButtonStyleProps}
+      colorScheme={colorScheme}
       onClick={onClick}
     >
       {children}
@@ -30,4 +31,4 @@ function BottomUIButton({ onClick, children }: Props) {
   );
 }
 
-export default BottomUIButton;
+export default WinnerModalUIButton;

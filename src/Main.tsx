@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
 import Game from '^/components/pages/Game';
 import { usePreferenceStore } from '^/store';
@@ -32,7 +32,7 @@ const Root = styled.div`
   background-color: var(--theme-bg-color);
 `;
 
-const Main: FC<{}> = () => {
+function Main() {
   const { theme } = usePreferenceStore();
 
   return (
@@ -43,6 +43,6 @@ const Main: FC<{}> = () => {
       </Root>
     </>
   );
-};
+}
 
 export default Main;

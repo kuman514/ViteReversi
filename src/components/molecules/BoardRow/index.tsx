@@ -1,4 +1,4 @@
-import React, { FC, ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 import styled from 'styled-components';
 import BoardButton from '^/components/atoms/BoardButton';
 import { BORDER_MAX, BORDER_MIN } from '^/constants';
@@ -12,7 +12,7 @@ const Root = styled.div`
   grid-template-columns: repeat(8, 1fr);
 `;
 
-const BoardRow: FC<Props> = ({ row }) => {
+function BoardRow({ row }: Props) {
   const buttonsOnRow: ReactNode[] = [];
   for (let col = BORDER_MIN; col <= BORDER_MAX; col++) {
     buttonsOnRow.push(
@@ -29,6 +29,6 @@ const BoardRow: FC<Props> = ({ row }) => {
       {buttonsOnRow}
     </Root>
   );
-};
+}
 
 export default BoardRow;
