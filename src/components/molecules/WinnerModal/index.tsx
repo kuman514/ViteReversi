@@ -37,16 +37,17 @@ const ButtonWrapper = styled.div`
 `;
 
 function WinnerModal() {
-  const {
-    winner, isContinuable, undo, reset,
-  } = useGameStore();
+  const winner = useGameStore((state) => state.winner);
+  const isContinuable = useGameStore((state) => state.isContinuable);
+  const undo = useGameStore((state) => state.undo);
+  const reset = useGameStore((state) => state.reset);
+
   const whoIsWinner: string = (winner !== Who.EMPTY)
     ? `Player ${winner} Wins!`
     : 'Draw!';
 
   const handleOnClickSaveReplay: () => void = () => {
-    const { history } = useGameStore.getState();
-    exportHistoryToReplay(history);
+    exportHistoryToReplay(useGameStore.getState().history);
   };
 
   return !isContinuable ? (

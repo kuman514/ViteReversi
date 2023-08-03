@@ -20,11 +20,11 @@ interface Props {
 }
 
 function PieceCount({ player, isForGame }: Props) {
-  const { pieceCount, currentTurn } = useGameStore();
+  const pieceCount = useGameStore((state) => state.pieceCount);
+  const currentTurn = useGameStore((state) => state.currentTurn);
   const thisPieceCount = (player !== Who.EMPTY) ? String(pieceCount[player]).padStart(2, '0') : '';
   const turnColor: string = (!isForGame || currentTurn === player) ? playerPallete[player] : '';
-
-  const { isReplaying } = useReplayStore();
+  const isReplaying = useReplayStore((state) => state.isReplaying);
 
   return isReplaying ? null : (
     <Root turnColor={turnColor}>

@@ -10,20 +10,18 @@ import { isInRange } from '^/utils';
 const Root = styled.div``;
 
 function UIButtonWrapper() {
-  const {
-    undo,
-    reset,
-    history: { length: historyLength },
-  } = useGameStore();
+  const undo = useGameStore((state) => state.undo);
+  const reset = useGameStore((state) => state.reset);
+  const historyLength = useGameStore((state) => state.history.length);
 
-  const {
-    isReplaying,
-    prevPage,
-    nextPage,
-    clearReplay,
-  } = useReplayStore();
+  const isReplaying = useReplayStore((state) => state.isReplaying);
+  const prevPage = useReplayStore((state) => state.prevPage);
+  const nextPage = useReplayStore((state) => state.nextPage);
+  const clearReplay = useReplayStore((state) => state.clearReplay);
 
-  const { theme, setTheme } = usePreferenceStore();
+  const theme = usePreferenceStore((state) => state.theme);
+  const setTheme = usePreferenceStore((state) => state.setTheme);
+
   const handleOnClickChangeTheme: () => void = () => {
     switch (theme) {
       case Theme.BRIGHT:
