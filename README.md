@@ -17,3 +17,7 @@
 - `Apr 28, 2023`: `v1.1.1` 게임이 오델로 룰을 제대로 따라가도록 수정
 - `Jul 03, 2023`: `v1.1.2` 타이틀이 더 이상 버전을 표시하지 않음
 - `Jul 20, 2023`: `v1.2.0` 패스 발생 시 스낵바 토스트로 표시
+- `Aug 04, 2023`: `v1.2.1` 스토어에서 필요한 멤버만 받아옴으로써 불필요한 재렌더링 감소
+  - https://github.com/pmndrs/zustand#fetching-everything
+  - https://github.com/pmndrs/zustand/discussions/913
+  - https://stackoverflow.com/questions/68609189/fetching-multiple-states-with-zustand-react-shorthand-syntax
