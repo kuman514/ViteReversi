@@ -44,11 +44,15 @@ function BoardButton({ row, col }: Props) {
     throw Error('Out of border range');
   }
 
-  const {
-    isAvailable, boardState, currentTurn, history: gameHistory, putPiece,
-  } = useGameStore();
+  const isAvailable = useGameStore((state) => state.isAvailable);
+  const boardState = useGameStore((state) => state.boardState);
+  const currentTurn = useGameStore((state) => state.currentTurn);
+  const gameHistory = useGameStore((state) => state.history);
+  const putPiece = useGameStore((state) => state.putPiece);
 
-  const { isReplaying, replayHistory, replayPage } = useReplayStore();
+  const isReplaying = useReplayStore((state) => state.isReplaying);
+  const replayHistory = useReplayStore((state) => state.replayHistory);
+  const replayPage = useReplayStore((state) => state.replayPage);
 
   const isThisAvailable = !isReplaying && isAvailable[row][col];
   const currentPiece: Who = isReplaying

@@ -33,7 +33,7 @@ const Root = styled.div`
 `;
 
 function Main() {
-  const { theme } = usePreferenceStore();
+  const theme = usePreferenceStore((state) => state.theme);
 
   return (
     <>
